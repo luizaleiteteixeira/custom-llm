@@ -1,0 +1,160 @@
+the opposite of fast is slow .
+the opposite of slow is fast .
+the opposite of big is small .
+the opposite of small is big .
+the opposite of tall is short .
+the opposite of short is tall .
+the opposite of clean is dirty .
+the opposite of dirty is clean .
+the opposite of young is old .
+the opposite of old is young .
+the opposite of wide is narrow .
+the opposite of narrow is wide .
+the opposite of bright is dark .
+the opposite of dark is bright .
+the opposite of early is late .
+the opposite of late is early .
+the soup felt hot at noon but turned cold by evening .
+the soup felt cold at noon but turned hot by evening .
+everyone noticed the soup was cold , not hot , this time .
+everyone noticed the soup was hot , not cold , this time .
+first the soup seemed hot , then it slowly became cold .
+first the soup seemed cold , then it slowly became hot .
+the soup felt empty at noon but turned full by evening .
+the soup felt full at noon but turned empty by evening .
+everyone noticed the soup was full , not empty , this time .
+everyone noticed the soup was empty , not full , this time .
+first the soup seemed empty , then it slowly became full .
+first the soup seemed full , then it slowly became empty .
+the soup felt noisy at noon but turned quiet by evening .
+the soup felt quiet at noon but turned noisy by evening .
+everyone noticed the soup was quiet , not noisy , this time .
+everyone noticed the soup was noisy , not quiet , this time .
+first the soup seemed noisy , then it slowly became quiet .
+first the soup seemed quiet , then it slowly became noisy .
+the engine felt hot at noon but turned cold by evening .
+the engine felt cold at noon but turned hot by evening .
+everyone noticed the engine was cold , not hot , this time .
+everyone noticed the engine was hot , not cold , this time .
+first the engine seemed hot , then it slowly became cold .
+first the engine seemed cold , then it slowly became hot .
+the engine felt empty at noon but turned full by evening .
+the engine felt full at noon but turned empty by evening .
+everyone noticed the engine was full , not empty , this time .
+everyone noticed the engine was empty , not full , this time .
+first the engine seemed empty , then it slowly became full .
+first the engine seemed full , then it slowly became empty .
+the engine felt noisy at noon but turned quiet by evening .
+the engine felt quiet at noon but turned noisy by evening .
+everyone noticed the engine was quiet , not noisy , this time .
+everyone noticed the engine was noisy , not quiet , this time .
+first the engine seemed noisy , then it slowly became quiet .
+first the engine seemed quiet , then it slowly became noisy .
+the stadium felt hot at noon but turned cold by evening .
+the stadium felt cold at noon but turned hot by evening .
+everyone noticed the stadium was cold , not hot , this time .
+everyone noticed the stadium was hot , not cold , this time .
+first the stadium seemed hot , then it slowly became cold .
+first the stadium seemed cold , then it slowly became hot .
+the stadium felt empty at noon but turned full by evening .
+the stadium felt full at noon but turned empty by evening .
+everyone noticed the stadium was full , not empty , this time .
+everyone noticed the stadium was empty , not full , this time .
+first the stadium seemed empty , then it slowly became full .
+first the stadium seemed full , then it slowly became empty .
+the stadium felt noisy at noon but turned quiet by evening .
+the stadium felt quiet at noon but turned noisy by evening .
+everyone noticed the stadium was quiet , not noisy , this time .
+everyone noticed the stadium was noisy , not quiet , this time .
+first the stadium seemed noisy , then it slowly became quiet .
+first the stadium seemed quiet , then it slowly became noisy .
+the kettle felt hot at noon but turned cold by evening .
+the kettle felt cold at noon but turned hot by evening .
+everyone noticed the kettle was cold , not hot , this time .
+everyone noticed the kettle was hot , not cold , this time .
+first the kettle seemed hot , then it slowly became cold .
+first the kettle seemed cold , then it slowly became hot .
+the kettle felt empty at noon but turned full by evening .
+the kettle felt full at noon but turned empty by evening .
+everyone noticed the kettle was full , not empty , this time .
+everyone noticed the kettle was empty , not full , this time .
+first the kettle seemed empty , then it slowly became full .
+first the kettle seemed full , then it slowly became empty .
+the kettle felt noisy at noon but turned quiet by evening .
+the kettle felt quiet at noon but turned noisy by evening .
+everyone noticed the kettle was quiet , not noisy , this time .
+everyone noticed the kettle was noisy , not quiet , this time .
+first the kettle seemed noisy , then it slowly became quiet .
+first the kettle seemed quiet , then it slowly became noisy .
+the hallway felt hot at noon but turned cold by evening .
+the hallway felt cold at noon but turned hot by evening .
+everyone noticed the hallway was cold , not hot , this time .
+everyone noticed the hallway was hot , not cold , this time .
+first the hallway seemed hot , then it slowly became cold .
+first the hallway seemed cold , then it slowly became hot .
+the hallway felt empty at noon but turned full by evening .
+the hallway felt full at noon but turned empty by evening .
+everyone noticed the hallway was full , not empty , this time .
+everyone noticed the hallway was empty , not full , this time .
+first the hallway seemed empty , then it slowly became full .
+first the hallway seemed full , then it slowly became empty .
+the hallway felt noisy at noon but turned quiet by evening .
+the hallway felt quiet at noon but turned noisy by evening .
+everyone noticed the hallway was quiet , not noisy , this time .
+everyone noticed the hallway was noisy , not quiet , this time .
+first the hallway seemed noisy , then it slowly became quiet .
+first the hallway seemed quiet , then it slowly became noisy .
+the classroom felt hot at noon but turned cold by evening .
+the classroom felt cold at noon but turned hot by evening .
+everyone noticed the classroom was cold , not hot , this time .
+everyone noticed the classroom was hot , not cold , this time .
+first the classroom seemed hot , then it slowly became cold .
+first the classroom seemed cold , then it slowly became hot .
+the classroom felt empty at noon but turned full by evening .
+the classroom felt full at noon but turned empty by evening .
+everyone noticed the classroom was full , not empty , this time .
+everyone noticed the classroom was empty , not full , this time .
+first the classroom seemed empty , then it slowly became full .
+first the classroom seemed full , then it slowly became empty .
+the classroom felt noisy at noon but turned quiet by evening .
+the classroom felt quiet at noon but turned noisy by evening .
+everyone noticed the classroom was quiet , not noisy , this time .
+everyone noticed the classroom was noisy , not quiet , this time .
+first the classroom seemed noisy , then it slowly became quiet .
+first the classroom seemed quiet , then it slowly became noisy .
+the tent felt hot at noon but turned cold by evening .
+the tent felt cold at noon but turned hot by evening .
+everyone noticed the tent was cold , not hot , this time .
+everyone noticed the tent was hot , not cold , this time .
+first the tent seemed hot , then it slowly became cold .
+first the tent seemed cold , then it slowly became hot .
+the tent felt empty at noon but turned full by evening .
+the tent felt full at noon but turned empty by evening .
+everyone noticed the tent was full , not empty , this time .
+everyone noticed the tent was empty , not full , this time .
+first the tent seemed empty , then it slowly became full .
+first the tent seemed full , then it slowly became empty .
+the tent felt noisy at noon but turned quiet by evening .
+the tent felt quiet at noon but turned noisy by evening .
+everyone noticed the tent was quiet , not noisy , this time .
+everyone noticed the tent was noisy , not quiet , this time .
+first the tent seemed noisy , then it slowly became quiet .
+first the tent seemed quiet , then it slowly became noisy .
+the pool felt hot at noon but turned cold by evening .
+the pool felt cold at noon but turned hot by evening .
+everyone noticed the pool was cold , not hot , this time .
+everyone noticed the pool was hot , not cold , this time .
+first the pool seemed hot , then it slowly became cold .
+first the pool seemed cold , then it slowly became hot .
+the pool felt empty at noon but turned full by evening .
+the pool felt full at noon but turned empty by evening .
+everyone noticed the pool was full , not empty , this time .
+everyone noticed the pool was empty , not full , this time .
+first the pool seemed empty , then it slowly became full .
+first the pool seemed full , then it slowly became empty .
+the pool felt noisy at noon but turned quiet by evening .
+the pool felt quiet at noon but turned noisy by evening .
+everyone noticed the pool was quiet , not noisy , this time .
+everyone noticed the pool was noisy , not quiet , this time .
+first the pool seemed noisy , then it slowly became quiet .
+first the pool seemed quiet , then it slowly became noisy .

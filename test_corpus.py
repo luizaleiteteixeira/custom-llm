@@ -8,13 +8,16 @@ from pathlib import Path
 import re
 import tempfile
 import unittest
+from run_evals import load_suite, reject_eval_leakage, validate_corpus_location
 from pypdf import PdfWriter
 from pypdf.generic import DictionaryObject, NameObject, DecodedStreamObject
 
 ROOT = Path(__file__).resolve().parent
 tree = ast.parse((ROOT/"custom_llm.py").read_text())
 functions = [n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name in {"word_tokens", "chunk_text", "load_corpus_folder"}]
-namespace = {"Path":Path, "hashlib":hashlib, "re":re}
+namespace = {"Path":Path, "hashlib":hashlib, "re":re,
+             "language_suite":load_suite(), "reject_eval_leakage":reject_eval_leakage,
+             "validate_corpus_location":validate_corpus_location}
 exec(compile(ast.Module(body=functions,type_ignores=[]),"notebook-loader","exec"),namespace)
 load_folder, chunk_text, word_tokens = (namespace[n] for n in ["load_corpus_folder","chunk_text","word_tokens"])
 

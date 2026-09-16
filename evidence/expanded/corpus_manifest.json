@@ -1,0 +1,63 @@
+{
+  "files": [
+    {
+      "file": "extension_categories_and_analogies.txt",
+      "bytes": 1244,
+      "sha256": "0a4bbe22f24f010a47caeb9b3cca7f7303b71b790ad100815f12a4b49eab1565",
+      "warnings": [],
+      "characters": 1244,
+      "passages": 30,
+      "unique_passages": 30,
+      "preview": "a sparrow is a type of bird .\na trout is a type of fish .\na rose is a type of flower .\na maple is a type of tree .\na ant is a type of insect .\na cucumber is a type of vegetable .\na peach is a type of fruit .\na hammer is a type of tool .\na cotton is a type of fabric .\na copper is a type of metal .\na "
+    },
+    {
+      "file": "extension_everyday_knowledge.txt",
+      "bytes": 975,
+      "sha256": "f336aedb0a88d483a3c981454e48e866f7c1a190111bc808e6188f855ab9ec63",
+      "warnings": [],
+      "characters": 975,
+      "passages": 17,
+      "unique_passages": 17,
+      "preview": "cold weather freezes the pond until it turns to solid ice .\nrain turns into puddles of water after the storm .\nice slowly melts back into water when the sun warms it .\nthe lake freezes solid every winter when the air turns cold .\nshe opened her umbrella before the rain started to fall .\na raincoat a"
+    },
+    {
+      "file": "extension_negation.txt",
+      "bytes": 2493,
+      "sha256": "cc81e5b3bb3081347055d245d6ee42c8eac8d3d6a7a54acb2d01371d8a8e44eb",
+      "warnings": [],
+      "characters": 2493,
+      "passages": 123,
+      "unique_passages": 87,
+      "preview": "the box is not blue . it is red . the box is red .\nthe crate is not red . it is blue . the crate is blue .\nthe crate is not blue . it is red . the crate is red .\nthe basket is not red . it is blue . the basket is blue .\nthe basket is not blue . it is red . the basket is red .\nthe cart is not red . i"
+    },
+    {
+      "file": "extension_opposites.txt",
+      "bytes": 9230,
+      "sha256": "88bfe516f894a4b5963ef546ef745f56ea719868f23c9fc1e37334d7547f3b1c",
+      "warnings": [],
+      "characters": 9230,
+      "passages": 160,
+      "unique_passages": 160,
+      "preview": "the opposite of fast is slow .\nthe opposite of slow is fast .\nthe opposite of big is small .\nthe opposite of small is big .\nthe opposite of tall is short .\nthe opposite of short is tall .\nthe opposite of clean is dirty .\nthe opposite of dirty is clean .\nthe opposite of young is old .\nthe opposite of"
+    },
+    {
+      "file": "extension_vocab_filler.txt",
+      "bytes": 710,
+      "sha256": "e1fe01bb89b0eb2d70b8a8f6bd7f1324e86f9289d864b1149e546117518d5ae2",
+      "warnings": [],
+      "characters": 710,
+      "passages": 12,
+      "unique_passages": 12,
+      "preview": "the sleepy cat looked completely asleep on the soft pillow .\na duck and a goat wandered near the old yellow barn .\nthe heavy box made a loud sound when it hit the wooden floor .\nshe felt hungry after searching for her missing shoe all morning .\nsteam rose slowly from the pot sitting on the round tab"
+    }
+  ],
+  "ignored": [],
+  "external_passages": 342,
+  "mode": "classroom",
+  "base_passages": 6200,
+  "unique_passages": 4898,
+  "new_unique_passages": 306,
+  "duplicates_removed": 1644,
+  "max_passage_tokens": 47,
+  "split_unit": "deduplicated passage, not source file"
+}

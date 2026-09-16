@@ -1,0 +1,40 @@
+{
+  "model": "llm_runs/20260916T203902_301104Z/model.pt",
+  "model_sha256": "d2903c78c64a59df9d8c897d562dee45bf038b1e285bf2ce59f36d173d5fa092",
+  "completed_steps": 3000,
+  "fresh_context_per_prompt": true,
+  "temperature": 0.8,
+  "max_tokens": 24,
+  "turns": [
+    {
+      "prompt": "the customer",
+      "seed": 2026,
+      "response": "compared the offering after checking the price .",
+      "unknown_prompt_words": [],
+      "prompt_truncated": false
+    },
+    {
+      "prompt": "the opposite of hot is",
+      "seed": 2027,
+      "response": "out .",
+      "unknown_prompt_words": [],
+      "prompt_truncated": false
+    },
+    {
+      "prompt": "ava did not buy tea . she bought milk . ava bought",
+      "seed": 2028,
+      "response": "red .",
+      "unknown_prompt_words": [],
+      "prompt_truncated": false
+    },
+    {
+      "prompt": "the weather today is",
+      "seed": 2029,
+      "response": "red .",
+      "unknown_prompt_words": [
+        "weather"
+      ],
+      "prompt_truncated": false
+    }
+  ]
+}

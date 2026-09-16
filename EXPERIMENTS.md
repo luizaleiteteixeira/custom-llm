@@ -2,8 +2,10 @@
 
 My professor asked me to push past the required 3,000-step baseline: train for longer, try a
 bigger model, and see how much "smarter" the model actually becomes. This is optional,
-supplementary work on top of the required submission in [README.md](README.md) — it doesn't
-replace it. All settings below are variations on the same notebook (`custom_llm.py`, the
+supplementary work done under an **earlier version of this assignment, before the 48-case
+language eval suite and chat interface existed** — see [README.md](README.md) for the current,
+required submission (two experiments, full eval comparison, chat evidence). It doesn't replace
+that submission. All settings below are variations on the same notebook (`custom_llm.py`, the
 script-mirror of `custom_llm.ipynb`), changing exactly one variable per run.
 
 **Runs**, all on the same synthetic classroom corpus (4,632 unique passages, seed 42, CPU,
@@ -20,9 +22,11 @@ learning rate 0.001, warmup + cosine decay):
 Full artifacts for each run: [experiments/steps5k/](experiments/steps5k/),
 [experiments/steps20k/](experiments/steps20k/), [experiments/steps100k/](experiments/steps100k/),
 [experiments/bigarch20k/](experiments/bigarch20k/) — same file set as the baseline's
-[evidence/](evidence/) folder (`history.json`, `config.json`, `checkpoint.json`, `model.pt`,
-`samples/`, `training_curves.svg`, etc.). The scripts that generated these
-(`experiments/run_experiment.py`, `experiments/run_all.sh`) are included for reproducibility.
+[archive_pre_eval_run/](archive_pre_eval_run/) folder (`history.json`, `config.json`,
+`checkpoint.json`, `model.pt`, `samples/`, `training_curves.svg`, etc. — this folder was called
+`evidence/` before the eval suite existed; renamed to make room for the two current required
+experiments). The scripts that generated these (`experiments/run_experiment.py`,
+`experiments/run_all.sh`) are included for reproducibility.
 
 ![validation loss vs training steps across all five runs, log x-axis](experiments/comparison_curves.svg)
 

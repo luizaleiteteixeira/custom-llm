@@ -1,0 +1,43 @@
+the box is not blue . it is red . the box is red .
+the crate is not red . it is blue . the crate is blue .
+the crate is not blue . it is red . the crate is red .
+the basket is not red . it is blue . the basket is blue .
+the basket is not blue . it is red . the basket is red .
+the cart is not red . it is blue . the cart is blue .
+the cart is not blue . it is red . the cart is red .
+the bin is not red . it is blue . the bin is blue .
+the bin is not blue . it is red . the bin is red .
+the trunk is not red . it is blue . the trunk is blue .
+the trunk is not blue . it is red . the trunk is red .
+mia did not buy milk . mia bought tea . mia bought tea .
+mia did not buy tea . mia bought milk . mia bought milk .
+zoe did not buy milk . zoe bought tea . zoe bought tea .
+zoe did not buy tea . zoe bought milk . zoe bought milk .
+sam did not buy milk . sam bought tea . sam bought tea .
+sam did not buy tea . sam bought milk . sam bought milk .
+kai did not buy milk . kai bought tea . kai bought tea .
+kai did not buy tea . kai bought milk . kai bought milk .
+priya did not buy milk . priya bought tea . priya bought tea .
+priya did not buy tea . priya bought milk . priya bought milk .
+diego did not buy milk . diego bought tea . diego bought tea .
+diego did not buy tea . diego bought milk . diego bought milk .
+tom did not buy milk . tom bought tea . tom bought tea .
+tom did not buy tea . tom bought milk . tom bought milk .
+ana did not buy milk . ana bought tea . ana bought tea .
+ana did not buy tea . ana bought milk . ana bought milk .
+the door is not closed . it is open . the door is open .
+the window is not open . it is closed . the window is closed .
+the window is not closed . it is open . the window is open .
+the gate is not open . it is closed . the gate is closed .
+the gate is not closed . it is open . the gate is open .
+the valve is not open . it is closed . the valve is closed .
+the valve is not closed . it is open . the valve is open .
+the lid is not open . it is closed . the lid is closed .
+the lid is not closed . it is open . the lid is open .
+the shutter is not open . it is closed . the shutter is closed .
+the shutter is not closed . it is open . the shutter is open .
+the hatch is not open . it is closed . the hatch is closed .
+the hatch is not closed . it is open . the hatch is open .
+the bakery sells fresh bread and warm rice bowls every morning .
+rice and bread are both common side dishes at dinner .
+ava walked to school every morning with her friends .

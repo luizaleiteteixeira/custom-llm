@@ -13,6 +13,22 @@
 # | [Sample project](https://github.com/pepealonso95/custom-llm)
 # | [nanoGPT source](https://github.com/karpathy/nanoGPT)
 #
+# ## How Evals Affect Your Assignment Grade
+#
+# This assignment is graded out of 10 using the course framework: deliverable quality (4 points), testing & evaluation (3 points), and working result (3 points). The 48-case eval percentage is a model measurement, not your assignment grade. The runner does not calculate your grade.
+#
+# - Deliverable quality (4 points): submit both executed experiments, readable source code, corpus sources and choices, and a clear README. Explain the model's learning process using your actual token, embedding, gradient, and loss evidence. Explain why you chose at least two extension categories and how your new teaching material addresses their gaps.
+#
+# - Testing & evaluation (3 points): run all 48 unchanged cases before and after training in each experiment. That means four complete result sets: starter untrained, starter trained, expanded-corpus untrained, and expanded-corpus trained. Save every case, the CSV/JSON results, summaries, and separation checks. Compare all-case success, scorable accuracy, vocabulary coverage, group/category scores, and actual free continuations, alongside the existing loss evidence. Explain failures and whether changes reflect vocabulary coverage, learned patterns, or both.
+#
+# - Working result (3 points): demonstrate your trained nanoGPT, rerunnable evals on your saved model, and a working interface that produces actual replies from that model. Include launch instructions, the model/run identity, and at least 3 real chat interactions with a screenshot or recording. A terminal or notebook interface is sufficient; a polished website is not required.
+#
+# Running and interpreting the evals is required. Missing runs, omitted cases, a missing corpus-extension comparison, or unsupported conclusions reduce testing & evaluation credit. Results produced by training on test prompts or answer keys are not valid evaluation evidence; remove the leakage and rerun. Incomplete notebook/code or a nonworking model/interface also affects the relevant deliverable or working-result category. Partial credit follows the evidence provided; this is not an automatic all-or-nothing checklist.
+#
+# There is no minimum model pass rate, leaderboard, or required numerical improvement. A low score, unknown-word cases, or an extension experiment that does not improve can still earn full testing & evaluation credit when the required experiments are complete, the method is valid, and the analysis explains what happened. Unknown-word cases count as zero in the model's all-case metric, not as an automatic deduction of the same percentage from your grade. A high score alone cannot replace valid evaluation, understanding, and a working deliverable.
+#
+# Before submitting, make the README show a four-row comparison for the two experiments and their untrained/trained stages, link all four result sets, identify the extension categories and added data, discuss at least one concrete failure or limitation, and link your chat evidence.
+#
 # ## 1. Make three choices
 # **Corpus:** put PDF, TXT or Markdown files in `corpus/` to expand the supplied
 # classroom sentences. Set CORPUS="folder" to use only your files instead.
@@ -40,6 +56,8 @@ LEARNING_RATE = 0.001
 # This cell fetches only the pinned nanoGPT source if absent and checks its hash.
 # Training defaults to CPU. GPU optimization is optional; no API keys or pretrained
 # weights are used. nanoGPT's model.py and MIT license are included in the repository.
+# Setup also downloads the fixed language evals and inference helpers. They live
+# outside corpus/ and are never used as training examples or vocabulary sources.
 # %%
 import csv
 import hashlib
@@ -59,6 +77,27 @@ from datetime import datetime, timezone
 from pathlib import Path
 import torch
 from torch.nn import functional as F
+
+# A saved Colab notebook needs its companion files; opening from GitHub does not
+# copy them. This release pins their content, independently of model weights.
+SUPPORT_REF = "f83578ff4fa4d8f582c7ac29a9276ef4a7bc13e8"
+SUPPORT_FILES = {'run_evals.py': 'da87f28d128344807512e2bac1cfc662b37ac2c7e4a32b84c09f1950e92d67a0', 'chat.py': '6152c8b7780f3b46fef5de38461adfc4b1a55df70ed106ca73ec5e9aded86d25', 'evals/language_evals.json': 'e8affcd72841e3ed7da5c0b6b116327fe9f69c9abd66a1180d1d88ceaa3e17f7'}  # Exact support-file SHA-256 checksums.
+for relative, expected_hash in SUPPORT_FILES.items():
+    destination = Path(relative)
+    if not destination.exists():
+        url = f"https://raw.githubusercontent.com/pepealonso95/custom-llm/{SUPPORT_REF}/{relative}"
+        with urllib.request.urlopen(url, timeout=30) as response:
+            data = response.read()
+        if hashlib.sha256(data).hexdigest() != expected_hash:
+            raise ValueError(f"Downloaded {relative} failed its hash check.")
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(data)
+    if hashlib.sha256(destination.read_bytes()).hexdigest() != expected_hash:
+        raise ValueError(f"{relative} differs from this notebook's fixed version. Restore it or reopen the latest starter.")
+from run_evals import (load_suite, evaluate_suite, generate_reply, model_hash,
+                       reject_eval_leakage, reserve_classroom_passages, validate_corpus_location)
+language_suite = load_suite("evals/language_evals.json")
+validate_corpus_location(CORPUS_FOLDER, "evals/language_evals.json")
 
 if importlib.util.find_spec("pypdf") is None:
     subprocess.check_call([sys.executable, "-m", "pip", "install", "pypdf>=5,<7"])
@@ -107,6 +146,9 @@ print("PyTorch:", torch.__version__, "| device:", DEVICE)
 # can appear in both sets. This does not test generalization to unseen documents.
 # Adding files requires Run All to retrain; it is not retrieval or instant knowledge.
 # Files in corpus/ are Git-ignored, but the results ZIP includes extracted text.
+# Before splitting, the starter removes sentences containing reserved eval prompts.
+# Imported files containing exact test prompts are rejected. This checks normalized
+# text matches, not meaning: you must still avoid copying answer keys or test paraphrases.
 # %%
 def word_tokens(text):
     return re.findall(r"\w+(?:['’]\w+)*|[^\w\s]", text.lower(), flags=re.UNICODE)
@@ -122,6 +164,7 @@ def chunk_text(text, max_tokens=47):
 def load_corpus_folder(folder, max_tokens=47):
     """Read only local, supported regular files. Never fetch document links or do OCR."""
     from pypdf import PdfReader
+    validate_corpus_location(folder, "evals/language_evals.json")
     root = Path(folder).resolve()
     if not root.is_dir():
         raise ValueError(f"Corpus folder not found: {root}. Create it and add PDF, TXT or MD files.")
@@ -173,6 +216,7 @@ def load_corpus_folder(folder, max_tokens=47):
                 raise ValueError("no readable text; empty files and image-only PDFs cannot train this model. Run OCR on scans first")
             if len(text) > 2_000_000:
                 raise ValueError("text exceeds 2 million characters")
+            reject_eval_leakage(text, language_suite, relative)
             file_chunks = chunk_text(text, max_tokens)
         except Exception as exc:
             raise ValueError(f"Could not import {relative}: {exc}") from exc
@@ -225,9 +269,13 @@ elif CORPUS == "folder":
     corpus_source = "Corpus folder files only"
 else:
     base_text = Path(CORPUS).read_text(encoding="utf-8-sig")
+    reject_eval_leakage(base_text, language_suite, CORPUS)
     corpus_source = "Custom UTF-8 base file plus corpus folder files"
 base_chunks = chunk_text(base_text, BLOCK_SIZE-1)
+base_chunks, eval_separation = reserve_classroom_passages(base_chunks, language_suite)
 all_chunks = base_chunks + extra_chunks
+for passage in all_chunks:
+    reject_eval_leakage(passage, language_suite, "final corpus passage")
 raw_text = "\n".join(all_chunks)
 docs = sorted(set(all_chunks))
 corpus_manifest.update({"mode":CORPUS, "base_passages":len(base_chunks), "unique_passages":len(docs),
@@ -246,8 +294,10 @@ def save_json(name, data):
     (run_dir / name).write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
 (run_dir / "corpus.txt").write_text(raw_text, encoding="utf-8")
 save_json("corpus_manifest.json", corpus_manifest)
+save_json("eval_separation.json", eval_separation)
 save_json("split.json", {"train": train_docs, "validation": val_docs, "evaluation_train": eval_train, "evaluation_validation": eval_val})
 print("Source:", corpus_source)
+print("Reserved eval passages excluded before splitting:", eval_separation["excluded_passages"])
 print("Imported files:", len(corpus_manifest["files"]), "| new unique passages:", corpus_manifest["new_unique_passages"])
 for entry in corpus_manifest["files"]:
     print(entry["file"], "→", entry["passages"], "passages", "| preview:", repr(entry["preview"][:100]))
@@ -375,6 +425,23 @@ def record(step):
 probabilities_before = probabilities(prefix)
 record(0)
 # %% [markdown]
+# ### 6b. Run the 48 fixed language evals before training
+# These are public synthetic tests kept in evals/, separate from the corpus.
+# This run is required evidence for the 3-point testing & evaluation category.
+# Run all cases here and in section 8b for BOTH corpus experiments, then compare
+# all four result sets in your README. The model's score is not your grade.
+# 16 test starter patterns, 8 use new phrasings, and 24 need a broader corpus.
+# We rank four possible next words from the model's probabilities. Only the prompt
+# enters the network. The answer key scores the result afterward. The runner also
+# saves free continuations; choosing a word correctly is not the same as fluent chat.
+# Unknown words are reported explicitly, never treated as a correct UNK match.
+# %%
+baseline_language_summary = evaluate_suite(model, vocabulary, language_suite,
+    run_dir/"language_evals"/"untrained", stage="untrained")
+torch.save({"model":{k:v.detach().cpu() for k,v in model.state_dict().items()},
+    "model_args":vars(model_config), "vocabulary":vocabulary, "completed_steps":0},
+    run_dir/"model_untrained.pt")
+# %% [markdown]
 # ## 7. Train: examples → predictions → loss → gradients → updates
 # Only training documents enter these batches. Save one real gradient and the first
 # embedding update. AdamW is not simply learning-rate times gradient: momentum,
@@ -453,6 +520,19 @@ temperatures = {str(t):generate(temperature=t) for t in [.3,.8,1.2]}
 save_json("temperature_comparison.json", temperatures)
 print("Temperature comparison:", json.dumps(temperatures,indent=2))
 # %% [markdown]
+# ### 8b. Repeat the same language evals after training
+# Keep all 48 cases, including failures. Compare scores and vocabulary coverage by
+# group and category. Adding more steps cannot recover words absent from the vocabulary.
+# For the assignment, choose at least two extension categories, add varied teaching
+# passages with different wording/examples in corpus/, and run a second experiment.
+# Keep these tests fixed. Because you inspect them to guide improvements, this is a
+# public development benchmark, not an unseen final test of general language ability.
+# %%
+final_language_summary = evaluate_suite(model, vocabulary, language_suite,
+    run_dir/"language_evals"/"final", stage="final")
+save_json("language_eval_comparison.json", {
+    "untrained":baseline_language_summary, "final":final_language_summary})
+# %% [markdown]
 # ## 9. Save evidence and open the viewer
 # Download the results ZIP AND the executed notebook separately after the final cell.
 # Open `embedding-viewer.html` from the repository, choose **Open your checkpoint**,
@@ -470,6 +550,8 @@ config = {"model":"nanoGPT", "upstream_commit":UPSTREAM_COMMIT, "tokenizer":"wor
     "corpus_files":len(corpus_manifest["files"]), "corpus_mode":CORPUS,
     "evaluation_panel_size":{"train":len(eval_train),"validation":len(eval_val)},
     "evaluation_reduction":"mean over non-padding next-token panel targets",
+    "language_eval_suite_sha256":final_language_summary["suite_sha256"],
+    "reserved_eval_passages":eval_separation["excluded_passages"],
     "python":sys.version,"torch":str(torch.__version__),"device":DEVICE,"hardware":platform.platform()}
 save_json("config.json",config)
 save_json("training_summary.json",{"completed_steps":completed_steps,"elapsed_seconds":elapsed,"interrupted":interrupted})
@@ -503,7 +585,37 @@ except ImportError:
     pass
 print("Saved:",run_dir,"\nResults ZIP:",archive)
 # %% [markdown]
-# ## 10. Explain in your own words
+# ## 10. Chat with your trained model
+# Edit CHAT_PROMPT and rerun the next cell for each new message. Each message starts
+# fresh; this model continues text and is not instruction-trained. The cell uses the
+# model you just trained, saves every interaction, and refreshes the results ZIP.
+# A terminal alternative is: python chat.py --model path/to/model.pt
+# Include at least three real interactions and a screenshot or short recording.
+# %%
+CHAT_PROMPT = "the customer"
+chat_file = run_dir/"chat_transcript.json"
+chat_record = json.loads(chat_file.read_text()) if chat_file.exists() else {
+    "model_sha256":model_hash(model), "completed_steps":completed_steps,
+    "fresh_context_per_prompt":True, "temperature":0.8, "max_tokens":24, "turns":[]}
+if chat_record["model_sha256"] != model_hash(model):
+    raise ValueError("The model changed. Start a new run instead of mixing chat evidence.")
+chat_seed = 2026 + len(chat_record["turns"])
+reply = generate_reply(model, vocabulary, CHAT_PROMPT, seed=chat_seed)
+print("You:", CHAT_PROMPT, "\nModel:", reply["response"] or "[empty response]")
+if reply["unknown_prompt_words"]:
+    print("Unknown words:", reply["unknown_prompt_words"])
+if reply["prompt_truncated"]:
+    print("Long prompt: only the most recent 48 tokens were used.")
+chat_record["turns"].append({"prompt":CHAT_PROMPT, "seed":chat_seed, **reply})
+save_json("chat_transcript.json",chat_record)
+archive = shutil.make_archive(str(run_dir),"zip",run_dir)
+print("Saved chat and refreshed ZIP:", archive)
+try:
+    display(FileLink(archive))
+except NameError:
+    pass
+# %% [markdown]
+# ## 11. Explain in your own words
 # 1. What can your corpus teach? What does this particular held-out split test?
 # 2. Trace one word through token, ID and 64-number embedding.
 # 3. Connect a prediction, loss, gradient and the saved parameter update.
@@ -511,5 +623,16 @@ print("Saved:",run_dir,"\nResults ZIP:",archive)
 # 5. What changed in samples and validation loss? What remains unconvincing?
 # 6. Explain attention, temperature and one next experiment. More training is not
 #    automatically better; a synthetic corpus does not demonstrate general knowledge.
+# 7. Which eval skills improved? Which lacked vocabulary or examples? Compare the
+#    starter run with your corpus-extension run using the same 48 tests.
+# 8. Show actual chat interactions and explain one failure or limitation.
 # Save the executed notebook, evidence and README in your own public repository.
-# Submit its URL through the course portal. A longer run is optional.
+# Submit its URL through the course portal. Keep both experiment results.
+#
+# ### Submission check
+# - Four complete 48-case result sets: starter untrained/trained and expanded untrained/trained.
+# - A four-row README comparison, category scores, coverage, and linked per-case outputs.
+# - At least two extension categories, new teaching data, and corpus-separation evidence.
+# - Actual free continuations, a concrete failure/limitation, and an explanation of the outcomes.
+# - Both executed notebooks, model evidence, launch instructions, and at least three real chat interactions.
+# Apply the 4/3/3 grading guidance near the top. No accuracy threshold or guaranteed improvement is required.

@@ -18,14 +18,57 @@ tokenizers; changing the model name alone would not turn character tokens into w
 2. Choose corpus, training steps and learning rate in section 1. Optionally add PDF, TXT or MD files to `corpus/` as explained below. Write your reasons and prediction.
 3. Try 10 steps for setup, then start with 3,000 steps and a learning rate of 0.001.
 4. Run All. Inspect the data, IDs, vectors, gradient, first weight update, probabilities, attention and samples.
-5. Download the results ZIP and the executed notebook separately after the final cell.
-6. Download embedding-viewer.html and open it locally. Use **Open your checkpoint** to load checkpoint.json from your extracted results ZIP.
-7. Explain the actual evidence in your own README and submit your public repository URL through the [course portal](https://submissions-portal-eight.vercel.app).
+5. Inspect the 48 language evals in sections 6b and 8b. Keep every result, including unknown-word cases. Use section 10 to chat with your trained model and save at least three real interactions.
+6. Choose at least two extension categories, add different teaching examples to `corpus/`, and run a second experiment using the same tests.
+7. Download each results ZIP and the executed notebook separately after the final cell.
+8. Download embedding-viewer.html and open it locally. Use **Open your checkpoint** to load checkpoint.json from your extracted results ZIP.
+9. Explain the actual evidence in your own README and submit your public repository URL through the [course portal](https://submissions-portal-eight.vercel.app).
 
 Locally, install the dependencies in requirements.txt, then open custom_llm.ipynb
 with that Python environment. You can also run custom_llm.py directly after editing
 its settings. Colab generally already includes PyTorch. Setup installs pypdf if absent, creates `corpus/`, and downloads
 the pinned nanoGPT source if needed and verifies its hash; it downloads no model weights.
+
+## Fixed language evals and chat
+
+The repository includes **48 synthetic language evals**: 16 reserved starter-pattern
+cases, 8 new phrasings using starter vocabulary, and 24 corpus-extension challenges
+covering grammar, opposites, negation, references, sequence, spatial relations,
+everyday knowledge, and categories/analogies.
+
+**[Read the eval guide and examples](evals/README.md)** ·
+**[Inspect all 48 cases](evals/language_evals.json)**
+
+Run All now saves complete untrained/final scores and free continuations, category
+breakdowns, unknown-word coverage, and corpus-separation evidence in the results ZIP.
+The answer key stays outside the model input and training data. Exact test prefixes
+are excluded from generated training sentences; imported files containing them are
+rejected. The original validation-loss panels remain a separate measurement.
+
+Students first save a starter-corpus run, then add different teaching material for
+at least two extension categories and compare a second run. Keep all tests fixed.
+This is a public development benchmark, not an unseen generalization claim. A low
+score is valid evidence; there is no required pass rate.
+
+**How this affects the assignment grade:** the course's 10-point framework stays
+deliverable quality **4**, testing & evaluation **3**, and working result **3**.
+Complete, valid evals and a reasoned comparison of both corpus experiments are
+required evidence for the 3-point evaluation category. Submit all four untrained/
+trained result sets. Missing runs, leaked tests, or missing analysis reduce credit;
+a low model score alone does not. The runner's score is not an automatic grade.
+See [the full grading guidance](ASSIGNMENT.md#how-evals-affect-your-assignment-grade).
+
+Notebook section 10 provides a working prompt/reply interface. Edit the prompt and
+rerun its cell; each message starts fresh. Terminal alternatives after training:
+
+```sh
+python run_evals.py --model llm_runs/YOUR_RUN/model.pt --output results/my-evals
+python chat.py --model llm_runs/YOUR_RUN/model.pt --transcript results/my-chat.json
+```
+
+Replace `YOUR_RUN` with your actual folder. `model.pt` contains the network;
+`checkpoint.json` serves the embedding viewer. No external model API is used.
+Keep `evals/`, results, and chat transcripts outside `corpus/`.
 
 ## What students should understand
 
@@ -52,6 +95,7 @@ health and education words. No category labels or coordinates are given to the m
 or viewer. This deliberately controlled dataset makes distributional learning easy
 to inspect; the resulting similarities are not evidence of broad semantic knowledge.
 
+- Reserve fixed language-eval prompts before the split or vocabulary building.
 - Split long text into passages of at most 47 word/punctuation tokens, normalize
   case and spacing, deduplicate, then split passages 90/10.
 - Build the vocabulary only from training passages. Keep the 509 most frequent
@@ -148,9 +192,19 @@ Load your own checkpoint.json to see your actual run, including its saved initia
 table. Files stay on your device. Legacy character checkpoints remain supported;
 when no initial table is present, before/after comparison is disabled.
 
-## Measured reference run
+## Measured language-eval run
 
-The complete notebook was executed in order with 3,000 steps and learning rate 0.001.
+The revised notebook was executed with 3,000 steps: **16/16 starter-pattern cases**
+and **4/8 new-wording cases** passed. All 24 extension cases lacked the required
+vocabulary. Complete untrained/final outputs and an actual three-prompt terminal
+transcript are in [the language-eval reference](examples/language-evals/README.md).
+These are measured teaching examples, not a required student score.
+
+## Historical reference run
+
+The historical reference notebook below was executed with 3,000 steps and learning rate 0.001,
+before the separate language-eval suite was added. Its numbers are not results for
+the new suite or the new reserved-prompt corpus.
 It learned 136 word/punctuation/special-token vectors. A separate 10-step setup run
 also completed. These are fixed panels of 20 documents per split, not full-corpus loss.
 
@@ -174,11 +228,16 @@ Inspect [the executed notebook](examples/custom_llm.executed.ipynb),
 Every run saves config.json, corpus.txt, corpus_manifest.json, vocabulary_report.json,
 split.json, tokenization.json, inspection.json,
 history.json, training.csv, training_summary.json, training_curves.svg, the sample
-timeline, temperature_comparison.json, checkpoint.json and model.pt.
+timeline, temperature_comparison.json, checkpoint.json and model.pt. It also saves
+model_untrained.pt, eval_separation.json, language_eval_comparison.json, and complete
+language_evals/untrained and language_evals/final folders. The chat cell adds
+chat_transcript.json and refreshes the ZIP.
 
 - **checkpoint.json:** token labels and initial/final embedding tables for the viewer.
 - **model.pt:** all network weights and model settings for inference.
 - Neither includes the complete optimizer/random state for exact training resume.
+- For the required corpus-extension experiment, keep the original results and train
+  a fresh model with your added teaching examples.
 - To train longer, set TRAINING_STEPS to 5000 or 10000 and Run All from the top.
   Compare validation loss and samples. More steps can overfit and are not required.
 - Interrupted training can be followed by the remaining save cells. Other failures

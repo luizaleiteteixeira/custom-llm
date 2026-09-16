@@ -2,6 +2,11 @@
 
 Replace the prompts below with your choices, actual outputs, and explanations.
 
+Grading uses deliverable quality **4 points**, testing & evaluation **3 points**,
+and working result **3 points**. Your model's eval percentage is not your grade.
+Complete, valid eval evidence and a reasoned comparison matter; no minimum pass
+rate or numerical improvement is required. Missing evidence earns less credit.
+
 ## My choices and prediction
 
 State your corpus and source, training steps, and learning rate. Give a brief reason
@@ -34,6 +39,41 @@ gradient, and after value, plus the probability comparison for the same prefix.
 
 Include the three temperatures' samples and link temperature_comparison.json.
 
+## My fixed language evals
+
+Link the unchanged `evals/language_evals.json`, runner, and every untrained/final
+`eval_results.csv` and `eval_summary.json` from both experiments. Report all 48 cases,
+all-case success, scorable accuracy, coverage, and scores by group/category. Show
+actual free continuations as well as the multiple-choice score; they are different.
+
+Fill this table with your actual values and links. Keep the category breakdowns
+and complete per-case outputs alongside it; this summary does not replace them.
+
+| Experiment | Stage | Correct / 48 | Scorable / 48 | Accuracy among scorable cases | Full results |
+|---|---|---|---|---|---|
+| Starter corpus | Untrained | | | | |
+| Starter corpus | Trained | | | | |
+| Expanded corpus | Untrained | | | | |
+| Expanded corpus | Trained | | | | |
+
+Which starter patterns worked? Did familiar words still work in new phrasings?
+Which extension skills lacked words or examples? Name at least two categories you
+chose, describe your new teaching material, and compare the starter and expanded
+corpus runs. Do not hide failures or claim an improvement without measured evidence.
+
+Link `eval_separation.json`. Explain how you kept prompts, answers, scoring rules,
+results, and chat logs out of training and vocabulary building. Mention the limits
+of exact-match leakage checks. These public tests guided development; they are not
+an untouched final test.
+
+## My chat interface
+
+Give the exact notebook or terminal launch instructions and identify the saved
+model/run. Include a screenshot or recording and at least three actual prompts
+and replies from `chat_transcript.json`. Explain one limitation, unknown words,
+the context limit, and whether prompts share history. Replies must come from your
+trained nanoGPT, not canned text or a different model API.
+
 ## What I learned
 
 Use actual values from your run to explain:
@@ -48,7 +88,7 @@ Use actual values from your run to explain:
 ## One limitation and my next experiment
 
 Describe one observed limitation. Propose one change to data or a setting, explain
-why, and predict the effect. A second training run is optional.
+why, and predict the effect. Include the required second run with a corpus extension in at least two language-eval categories. Further experiments are optional.
 
 ## Reproduce and inspect
 
