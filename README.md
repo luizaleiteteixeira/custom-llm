@@ -302,6 +302,26 @@ four categories I never touched stayed exactly where they were before — which 
 what the assignment says: more training steps cannot teach the model words or
 patterns it was never shown.
 
+## Actual free continuations (not the scored part)
+
+Every test question also gets a free, unguided piece of generated text (24 tokens,
+never scored, just saved for me to look at). This is different from the
+multiple-choice score, and sometimes they disagree — here are 4 real examples,
+taken straight from `eval_results.json` in each stage:
+
+| Question | Prompt | Stage | Multiple-choice score | Free continuation (unscored) |
+|---|---|---|---|---|
+| `lang_01` (starter_patterns) | "the report about the customer explains the" | expanded, before training | wrong | *"looked patch patch banana lesson it tall between code so shared yellow stay..."* (word salad) |
+| `lang_01` (starter_patterns) | "the report about the customer explains the" | expanded, after training | **correct** | *"purchase in detail ."* (matches the score — makes sense) |
+| `lang_31` (negation) | "the box is not red . it is blue . the box is" | expanded, after training | **correct** | *"."* (empty/near-empty — the score says correct, but the free text says almost nothing) |
+| `lang_43` (everyday_knowledge) | "water freezes into" | expanded, after training | wrong | *"a question about the steam at noticed ."* (grabs "steam", a related word, but still wrong and not fluent) |
+
+`lang_31` is the clearest example of why the assignment keeps these two things
+separate: the model picked the right word out of 4 choices (`blue`), which counts as
+a correct score — but when I let it freely generate text instead of forcing a choice,
+it produced almost nothing useful. Getting a multiple-choice question right does not
+mean the model can actually write a good sentence about it.
+
 ## Chat interface
 
 **How to run it yourself:**
