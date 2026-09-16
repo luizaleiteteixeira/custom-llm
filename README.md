@@ -1,194 +1,160 @@
-# Building a Custom LLM with nanoGPT
+# My Custom LLM Experiment
 
-Class 4, Fall 26 · From Zero to AI Agents
+Class 4 assignment for *From Zero to AI Agents* — training Karpathy's actual
+nanoGPT transformer from scratch on a small word-token corpus, then inspecting
+what the numbers show. This README is the grading entry point: it links every
+piece of evidence so it can be reviewed without rerunning the notebook.
 
-Train Karpathy's actual **nanoGPT transformer** from scratch and inspect its learned
-**word-token embeddings**. The classroom adaptation uses whole words and punctuation,
-a small sentence corpus, and an explanatory notebook. nanoGPT itself supports different
-tokenizers; changing the model name alone would not turn character tokens into words.
+- **Executed notebook:** [custom_llm.ipynb](custom_llm.ipynb) (run end-to-end, all outputs visible — open on GitHub to inspect without downloading)
+- **Starter project / assignment source:** [pepealonso95/custom-llm](https://github.com/pepealonso95/custom-llm), [ASSIGNMENT.md](ASSIGNMENT.md)
+- **Evidence folder:** [evidence/](evidence/) — the full results directory saved by the notebook's final run, plus [evidence_results.zip](evidence_results.zip) (the same folder zipped)
 
-[Open in Colab](https://colab.research.google.com/github/pepealonso95/custom-llm/blob/main/custom_llm.ipynb)
-· [Assignment Google Doc](https://docs.google.com/document/d/1MQ3YQl2ywWZF7W5_l_91FiIp7pTYPO_3viI2JVapRcc/edit)
-· [Assignment text](ASSIGNMENT.md)
-· [3D embedding viewer](embedding-viewer.html)
+## My choices and prediction
 
-## Start here
+| Choice | Value | Reason |
+|---|---|---|
+| Corpus | `CORPUS = "classroom"` | Only the notebook's built-in synthetic teaching sentences — no external files, so no data-permission concerns. |
+| Training steps | `TRAINING_STEPS = 3000` | The assignment's suggested starting budget, after a 10-step setup run confirmed the environment worked (finished in ~5s). |
+| Learning rate | `LEARNING_RATE = 0.001` | The suggested default, with warmup + cosine decay handled inside the training cell. Too large risks the loss diverging/oscillating past the minimum; too small barely moves the weights in 3,000 steps. |
 
-1. Open the notebook in Colab and save your own copy. The default CPU runtime is enough.
-2. Choose corpus, training steps and learning rate in section 1. Optionally add PDF, TXT or MD files to `corpus/` as explained below. Write your reasons and prediction.
-3. Try 10 steps for setup, then start with 3,000 steps and a learning rate of 0.001.
-4. Run All. Inspect the data, IDs, vectors, gradient, first weight update, probabilities, attention and samples.
-5. Download the results ZIP and the executed notebook separately after the final cell.
-6. Download embedding-viewer.html and open it locally. Use **Open your checkpoint** to load checkpoint.json from your extracted results ZIP.
-7. Explain the actual evidence in your own README and submit your public repository URL through the [course portal](https://submissions-portal-eight.vercel.app).
+I used the supplied synthetic classroom corpus only (no files added to `corpus/`), so there's no
+external source to attribute permission for — see [evidence/corpus_manifest.json](evidence/corpus_manifest.json)
+(`external_passages: 0`, `mode: "classroom"`).
 
-Locally, install the dependencies in requirements.txt, then open custom_llm.ipynb
-with that Python environment. You can also run custom_llm.py directly after editing
-its settings. Colab generally already includes PyTorch. Setup installs pypdf if absent, creates `corpus/`, and downloads
-the pinned nanoGPT source if needed and verifies its hash; it downloads no model weights.
+**My prediction, written before training** (also in the notebook's "My prediction" cell):
+validation loss would drop quickly from ~4.9 (random guessing over the vocabulary) and flatten
+somewhere around 0.7–1.5 by step 3,000, since the corpus repeats a small set of sentence
+templates; generated text would go from word salad to grammatical-but-narrow template sentences;
+and the word `customer` would end up with neighbors like `client`, `buyer`, `shopper`, `consumer`,
+since the corpus repeats patterns like "compared the X with another X" across retail nouns.
 
-## What students should understand
+**What I actually observed:** loss landed at 0.696 (train) / 0.706 (validation) — right at the
+low end of my range, and train/validation tracked closely rather than diverging. Samples went
+from word salad at step 0 to grammatical template sentences by step 1,500–3,000, exactly as
+predicted. `customer`'s measured nearest neighbors are `client` (cosine 0.985), `buyer` (0.981),
+`subscriber` (0.980), `consumer` (0.979), `shopper` (0.978) — matching my prediction almost word
+for word.
 
-| Idea | Evidence |
-|---|---|
-| Corpus and data | Imported text, short passages, deduplication and held-out passages |
-| Tokens and IDs | Words/punctuation mapped to arbitrary integer IDs |
-| Vectors and embeddings | One word's 64 numbers before/after, and the complete table |
-| Neural networks | Weighted sums, GELU, attention blocks, residuals and parameters |
-| Learning | Next-token loss, a real gradient and a parameter update |
-| Context and prediction | Trained causal attention and next-token probabilities |
-| Inference | Samples at three temperatures without weight updates |
+## My run
 
-The story is **examples → predictions → loss → gradients → updates → changed predictions**.
-Character embeddings were already real embeddings in the original lab; the difference
-here is that the units represent words rather than letters. A coordinate is not a
-named concept, and a small language model is not a general chat assistant.
+- Completed steps: **3,000 / 3,000** (not interrupted) — [evidence/training_summary.json](evidence/training_summary.json)
+- Elapsed time: **9.72 seconds** of training compute (full notebook, setup through save, ran in ~17s)
+- Hardware: Apple Silicon Mac, `macOS-15.7.4-arm64-arm-64bit-Mach-O`, CPU only (no GPU used) — [evidence/config.json](evidence/config.json)
+- Software: Python 3.13.15, PyTorch 2.14.0
+- Parameter count: **111,872** (2 blocks, 4 heads, 64-dim embeddings, 48-token context — the classroom nanoGPT config)
+- Vocabulary size: **136** tokens (133 retained word/punctuation types + `<UNK>`, `<BOS>`, `<EOS>`)
+- Documents: 4,632 unique deduplicated passages (6,360 raw − 1,728 duplicates) → **4,168 train / 464 validation** (90/10 split)
+- Unknown-token rate: **0.00%** on both training and held-out text — [evidence/vocabulary_report.json](evidence/vocabulary_report.json)
 
-## Corpus and tokenizer
+The 509-type vocabulary cap was never binding here (only 133 distinct types existed in this
+synthetic corpus, all retained), so nothing became `<UNK>` — the classroom corpus is
+intentionally small and repetitive. The split is by deduplicated *passage*, not by source file;
+since every passage here is a synthetic single-sentence template, this evaluation tests whether
+the model generalizes to new combinations of the same templates, not to unseen writing styles.
 
-The default is a **synthetic classroom corpus**, generated visibly in the notebook.
-It repeats sentence contexts around business, finance, food, transport, software,
-health and education words. No category labels or coordinates are given to the model
-or viewer. This deliberately controlled dataset makes distributional learning easy
-to inspect; the resulting similarities are not evidence of broad semantic knowledge.
+## My evidence
 
-- Split long text into passages of at most 47 word/punctuation tokens, normalize
-  case and spacing, deduplicate, then split passages 90/10.
-- Build the vocabulary only from training passages. Keep the 509 most frequent
-  word/punctuation types, plus UNK, BOS and EOS (512 total at most).
-- Reserve UNK for omitted/unknown tokens, BOS for passage start and EOS for passage end.
-- Report unknown-token rates for both training and held-out text.
-- Validation shares sentence templates with training. It tests new combinations
-  within those templates, not generalization to unseen domains or writing styles.
+**Loss curve** ([evidence/training_curves.svg](evidence/training_curves.svg)):
 
-## Expand your corpus with files
+![training and validation loss curves](evidence/training_curves.svg)
 
-Put your files in **`corpus/` beside the notebook**, for example:
-
-```text
-custom_llm.ipynb
-corpus/
-  report.pdf
-  notes.txt
-  research/
-    summary.md
-```
-
-1. **Locally:** add files to that folder. Subfolders and uppercase extensions work too.
-2. **In Colab:** run sections 1 and 2 once to create `/content/corpus`. In the left
-   Files sidebar, refresh and upload your files into that folder. Opening the notebook
-   from GitHub does not copy the repository's folders or your local files into Colab.
-3. Keep `CORPUS = "classroom"` to add the files to the teaching sentences. Use
-   `CORPUS = "folder"` to train only on your files. Folder-only mode needs at least
-   100 distinct extracted passages. `CORPUS_FOLDER` can point to another local folder.
-4. **Run All from the top.** Section 3 reports the imported filenames, previews,
-   passage counts and extraction warnings. Check that the expected text is present.
-5. After training, download the new results ZIP and load its `checkpoint.json` in the
-   embedding viewer. Adding files alone does not update the model or viewer: this is
-   training from scratch, not a document search system.
-
-PDFs must contain extractable text. Scans need OCR first; encrypted, unreadable and
-entirely textless files stop the run with the filename and a useful error. PDFs with
-some textless pages produce warnings. Inspect previews and `corpus.txt`, especially
-for tables, columns or headers whose extraction order can be confusing. TXT and MD
-must use UTF-8. Markdown is read as plain text; links and code are not fetched or run.
-
-Long text is split automatically, not truncated, with sentence/line boundaries kept
-when possible. There is no overlap between chunks. The 90/10 split is by deduplicated
-**passage, not original file**: parts of one source file can appear in both sets.
-This does not measure generalization to entirely unseen source documents.
-
-Larger vocabularies no longer cause rejection. Tokens outside the 509 retained types
-become UNK, as do token strings longer than 128 characters. Inspect
-`vocabulary_report.json` and the printed coverage rates; a large, varied collection
-can lose much of its detail in this deliberately small vocabulary. The notebook warns
-above 5% unknown tokens. Start with focused, related text, not an entire library.
-
-`corpus_manifest.json` records filenames, hashes, previews, warnings, added passages
-and duplicate counts. Limits: 50 supported files, 25 MB each, 100 MB total, 200 pages
-per PDF and 2 million extracted characters per file. Hidden files, symbolic links,
-unsupported formats and the root `corpus/README.md` instructions are ignored.
-
-**Sharing:** added source files in `corpus/` are Git-ignored, but the results ZIP,
-executed notebook and trained model can still expose their content. The ZIP includes
-extracted text, filenames/hashes and weights. Use material you have permission to use
-and share; review every artifact before publishing. Colab uploads disappear when its
-runtime storage is reset. See [the folder instructions](corpus/README.md).
-
-## The actual nanoGPT model
-
-[nanogpt_model.py](nanogpt_model.py) is an unchanged copy of Karpathy's
-[model.py at commit 3adf61e](https://github.com/karpathy/nanoGPT/blob/3adf61e154c3fe3fca428ad6bc3818b27a3b8291/model.py).
-Its [MIT license](NANOGPT_LICENSE) is included.
-
-The classroom configuration uses 2 blocks, 4 heads, 64-dimensional token/position
-embeddings, a 48-token context, LayerNorm, GELU, residual connections and tied
-input/output embeddings. PyTorch handles autograd; batched AdamW replaces the old
-handwritten scalar training loop. Word tokenization and the teaching/evaluation/export
-helpers are classroom additions, not claims about nanoGPT's default tokenizer.
-
-The upstream repository now labels nanoGPT deprecated in favor of nanochat.
-We deliberately pin nanoGPT here because this assignment is about its compact,
-inspectable GPT implementation, not adopting a production training stack.
-
-## Viewer
-
-Open the single offline HTML file. It bundles the reference model's **actual recorded
-initial and final token lookup embeddings**. Drag to rotate, scroll or use buttons to
-zoom, and select a word from the menu or click a dot. Scroll the vector panel for all
-64 coordinates. Selected words and their three closest neighbors are labeled.
-
-Both states share a PCA center, basis and scale. The default projection retains
-40.9% of pooled variance, so proximity in 3D can distort the full space. Neighbor
-rankings use cosine similarity across all 64 coordinates. Movement lines connect
-endpoints, not intermediate training trajectories. These are token lookup embeddings,
-not position embeddings or context-dependent representations after attention.
-
-Load your own checkpoint.json to see your actual run, including its saved initial
-table. Files stay on your device. Legacy character checkpoints remain supported;
-when no initial table is present, before/after comparison is disabled.
-
-## Measured reference run
-
-The complete notebook was executed in order with 3,000 steps and learning rate 0.001.
-It learned 136 word/punctuation/special-token vectors. A separate 10-step setup run
-also completed. These are fixed panels of 20 documents per split, not full-corpus loss.
+**Full measured loss table** (fixed panels of 20 training + 20 validation documents each,
+averaged over non-padding next-token targets — [evidence/history.json](evidence/history.json)):
 
 | Step | Training panel loss | Validation panel loss |
-|---|---:|---:|
+|---|---|---|
 | 0 | 4.9238 | 4.9247 |
 | 1500 | 0.6929 | 0.7113 |
 | 3000 | 0.6956 | 0.7057 |
 
-Final examples include “our school has a question about the new educator and lesson .”
-and “the consumer compared the merchandise after checking the price .”
-The measured nearest neighbors of customer are client, buyer and subscriber.
-Their similar designed contexts explain this result; it does not prove general understanding.
+**Samples at three checkpoints, same generation settings** (full files in [evidence/samples/](evidence/samples/)):
 
-Inspect [the executed notebook](examples/custom_llm.executed.ipynb),
-[complete reference evidence](examples/reference/), and
-[results ZIP](examples/reference.zip). Use your own outputs in your submission.
+- **Untrained (step 0):** `pear professor bond doctor course harvest team physician journey checking buyer delivery traffic report the lecturer item offering and system <UNK> taste recommended mentioned bus question customer at mortgage nurse in instructor` — pure word salad, no grammar.
+- **Halfway (step 1500):** `our school has a question about the new educator and lesson .` / `the consumer compared the merchandise after checking the price .` — grammatical template sentences.
+- **Final (step 3000):** identical text to step 1500 for this run (`our school has a question about the new educator and lesson .`, `the consumer compared the merchandise after checking the price .`) — the model had already converged onto the same output by step 1500, and loss barely moved between 1500 and 3000 (0.6929→0.6956 train), so the visible change is between step 0 and step 1500, not between 1500 and 3000.
 
-## Results and longer training
+**Token → ID → embedding, gradient, and update** ([evidence/tokenization.json](evidence/tokenization.json), [evidence/inspection.json](evidence/inspection.json)):
 
-Every run saves config.json, corpus.txt, corpus_manifest.json, vocabulary_report.json,
-split.json, tokenization.json, inspection.json,
-history.json, training.csv, training_summary.json, training_curves.svg, the sample
-timeline, temperature_comparison.json, checkpoint.json and model.pt.
+- Word **`customer`** → token ID **28** in the vocabulary.
+- Embedding **before** training (first 5 of 64 numbers): `[-0.0576, -0.0048, 0.0426, 0.0193, 0.0156]`
+- Embedding **after** 3,000 steps (first 5 of 64): `[0.0371, -0.0048, 0.1358, 0.1226, 0.0716]`
+- First saved parameter update (coordinate 0 of `customer`'s embedding, at the very first training step): `before = -0.057592`, `gradient = -0.00040561`, `learning_rate = 1e-05` (warmup hadn't ramped up yet), `after = -0.057582`.
+- Next-token probabilities for the prefix **"the customer"**: before training, the top guess was `customer` itself at only **1.6%** (near-random over 136 tokens); after training, the top guesses were `ordered` (19.3%), `reviewed` (19.2%), `recommended` (17.7%), `selected` (17.2%), `compared` (13.6%) — all grammatically sensible continuations of "the customer ___".
 
-- **checkpoint.json:** token labels and initial/final embedding tables for the viewer.
-- **model.pt:** all network weights and model settings for inference.
-- Neither includes the complete optimizer/random state for exact training resume.
-- To train longer, set TRAINING_STEPS to 5000 or 10000 and Run All from the top.
-  Compare validation loss and samples. More steps can overfit and are not required.
-- Interrupted training can be followed by the remaining save cells. Other failures
-  require correcting the cause; do not assume a complete ZIP was saved.
+**Temperature comparison**, same trained model and starting token, three temperatures
+([evidence/temperature_comparison.json](evidence/temperature_comparison.json)):
 
-Use [STUDENT_README.md](STUDENT_README.md) to organize your explanation.
-The [historical microgpt lab](legacy/README.md) is preserved separately; its results
-must not be presented as results of this word-token model.
+| Temperature | Sample |
+|---|---|
+| 0.3 (sharper) | `our school has a question about the new educator and lesson .` |
+| 0.8 (default) | `the report about the nurse explains the health in detail .` |
+| 1.2 (flatter) | `the report about the nurse explains the health in detail .` |
 
-For maintainers: run python3 build_embedding_viewer.py to refresh the bundled
-reference vectors, then node test_embedding_viewer.cjs to verify PCA, similarities,
-checkpoint consistency and import validation. Run python3 test_corpus.py to check
-real PDF/TXT/MD extraction, long-text chunking, nested files and useful failure messages.
+## What I learned
+
+1. **Corpus:** the classroom corpus is synthetic sentences that deliberately reuse a small set
+   of templates (business, finance, food, transport, software, health, education) so related
+   nouns fill the same slots. It can teach the model those templates and to place
+   same-slot words near each other in embedding space; it can't teach real facts or reasoning.
+   Data is held out (464 passages) so I can check the model isn't just memorizing the exact
+   training passages — but since validation reuses the same templates, this only tests
+   recombination within known patterns, not generalization to new domains.
+2. **Token vs. ID vs. vector vs. embedding:** a *token* is a unit of text (here, a word or
+   punctuation mark from `word_tokens`). A *token ID* is the arbitrary integer index of that
+   token in the vocabulary list (`customer` → 28) — the number itself carries no meaning, it's
+   just a lookup key. A *vector* is any ordered list of 64 numbers. An *embedding* is the specific
+   vector the network has learned to associate with a given ID, stored in a lookup table
+   (`wte`) that training updates — before training it's random noise, after training its
+   position encodes which other words appear in similar contexts.
+3. **What makes it a neural network, and how it learns:** the model is layered weighted sums
+   (attention + MLP blocks) with GELU nonlinearities, residual connections, and LayerNorm,
+   ending in a projection back to vocabulary-sized logits. Each training step: run a batch of
+   documents through the network to get next-token probabilities → cross-entropy loss compares
+   those probabilities to the actual next tokens → backpropagation computes the gradient of the
+   loss with respect to every one of the 111,872 parameters → AdamW uses each gradient (scaled by
+   its own learning-rate schedule and momentum/variance estimates) to nudge every parameter a
+   small step. Repeated 3,000 times, loss fell from ~4.92 (random) to ~0.70.
+4. **Attention and context:** causal self-attention lets each position combine information only
+   from itself and *earlier* tokens — the measured attention rows show position 0 attending
+   100% to itself (nothing precedes it) and later positions blending across earlier ones
+   (e.g. `[0.585, 0.415, 0.0]`), never assigning any weight to future positions. That masking is
+   what makes it a left-to-right causal language model rather than a bag-of-words model.
+5. **Probabilities, generation, and temperature:** the network's final layer outputs one logit
+   per vocabulary token; softmax turns those into a probability distribution; sampling from that
+   distribution (repeatedly, feeding each new token back in) produces text one word at a time.
+   Temperature divides the logits before the softmax: lower temperature (0.3) sharpens the
+   distribution toward the already-most-likely tokens (more repetitive), higher temperature (1.2)
+   flattens it (more varied, less certain). None of the three temperature runs touch any weight —
+   `temperature_comparison.json` reuses the exact same trained `model.pt` for all three; only the
+   sampling step changes.
+6. **Did the evidence support my prediction?** Yes, closely: measured final loss (0.696/0.706)
+   landed at the low end of my predicted 0.7–1.5 range, samples turned from gibberish into
+   grammatical template sentences as predicted, and `customer`'s actual nearest neighbors
+   (client, buyer, subscriber, consumer, shopper) matched my prediction almost exactly. What I
+   can honestly conclude: the model learned the statistical shape of this narrow, repetitive
+   corpus very well, and its "understanding" of words like `customer` is entirely a byproduct of
+   which other words share its sentence slots — not evidence of broader semantic knowledge.
+
+## One limitation and my next experiment
+
+**Limitation:** validation loss essentially matched training loss (0.706 vs. 0.696) and samples
+stopped changing between step 1,500 and step 3,000 — the model converged almost immediately
+because the corpus only contains ~7 sentence templates over a 133-word vocabulary. This means the
+loss curve and "held-out" evaluation can't distinguish memorization from generalization here;
+the model may simply be able to reproduce every template it's seen, and the held-out passages
+are new fills of the same templates, not a real test of unseen material.
+
+**Next experiment:** add my own permitted text files (e.g. personal class notes) into `corpus/`
+with `CORPUS = "classroom"` and rerun. I'd predict the unknown-token rate stays low if the added
+text overlaps the existing vocabulary, but validation loss should rise and samples should look
+less repetitive, since a more naturalistic, less templated corpus is harder for a two-block,
+111K-parameter model to fully memorize in 3,000 steps.
+
+## Reproduce and inspect
+
+1. Clone this repo, then either:
+   - **Locally:** `python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt`, then open [custom_llm.ipynb](custom_llm.ipynb) with that environment, or run `python custom_llm.py` directly.
+   - **Colab:** open [custom_llm.ipynb](custom_llm.ipynb) on GitHub and click "Open in Colab" (default CPU runtime is enough).
+2. Section 1 of the notebook holds the three settings (`CORPUS`, `TRAINING_STEPS`, `LEARNING_RATE`) — already set to the values used in this run. Run All to reproduce; the run is seeded, so it should reproduce these exact numbers.
+3. All evidence referenced above lives in [evidence/](evidence/) (unzipped) and [evidence_results.zip](evidence_results.zip) (zipped) — no corpus files were added beyond the notebook's built-in synthetic sentences, so nothing here needs redaction.
+4. To use the [embedding viewer](https://github.com/pepealonso95/custom-llm/blob/main/embedding-viewer.html), download it from the upstream repo, open it locally, and load [evidence/checkpoint.json](evidence/checkpoint.json).
