@@ -219,10 +219,14 @@ Here I follow the word **`customer`** through the starter run
   of 136 words). After training, it clearly prefers real verbs like `ordered`,
   `reviewed`, `recommended`, `selected`, `compared` — all of these actually make sense
   after "the customer ___".
-- The words closest to `customer`'s trained embedding (measuring across all 64
-  numbers, not just 2 or 3 of them): **client, buyer, subscriber, consumer,
-  shopper** — and this is true in both runs. This group forms very early in training
-  and doesn't change even after I added four unrelated new topics in the expanded run.
+- The words closest to `customer`'s embedding **before** training are just random
+  noise, since the embedding itself is random at that point: bus, educator, helped,
+  bank, risk — unrelated words, with low similarity (~0.20). **After** training, the
+  closest words become client, buyer, subscriber, consumer, shopper, all above 0.97
+  similarity (measuring across all 64 numbers, not just 2 or 3 of them) — a real,
+  large change caused entirely by training. This same trained group shows up in the
+  expanded run too, even after I added four unrelated new topics, so once it forms
+  it stays stable.
 
 ## Attention and temperature
 
@@ -370,13 +374,16 @@ live, while generating text, is something it still fails at.
    `customer` is 28 in one vocabulary and 92 in another, and the number itself has no
    meaning by itself. An embedding is the actual list of 64 numbers the network
    learns for that ID — random at the start, and meaningful after training.
-3. **Loss, gradient, and weight updates:** the loss measures how surprised the model
-   is by the real next word. Backpropagation calculates a gradient for every single
-   parameter (around 112K to 132K of them here). Then AdamW uses that gradient to
-   move each parameter a tiny bit. Different vocabulary sizes give a different
-   starting loss just from random guessing (`ln(vocab_size)`), which is why I can't
-   directly compare the loss numbers between my two runs — that's also why
-   `config.json` records the exact vocabulary size for each run.
+3. **Prediction, loss, gradient, and weight updates:** the model's prediction is a
+   probability for every possible next word. The loss just measures how low a
+   probability it gave the *real* next word — a near-random prediction (like the
+   1.6% it gave `customer` at step 0) means a high loss. Backpropagation turns that
+   loss into a gradient for every single parameter (around 112K to 132K of them
+   here). Then AdamW uses that gradient to move each parameter a tiny bit. Different
+   vocabulary sizes give a different starting loss just from random guessing
+   (`ln(vocab_size)`), which is why I can't directly compare the loss numbers between
+   my two runs — that's also why `config.json` records the exact vocabulary size for
+   each run.
 4. **Attention and temperature:** attention only looks backward, never forward.
    Temperature only changes how text is sampled when generating — it never touches
    any learned weight.
