@@ -1,96 +1,106 @@
-# Extended experiments: more steps, bigger model — does it get "smarter"?
+# Extended experiments: more steps, a bigger model — does it get "smarter"?
 
-My professor asked me to push past the required 3,000-step baseline: train for longer, try a
-bigger model, and see how much "smarter" the model actually becomes. This is optional,
-supplementary work done under an **earlier version of this assignment, before the 48-case
-language eval suite and chat interface existed** — see [README.md](README.md) for the current,
-required submission (two experiments, full eval comparison, chat evidence). It doesn't replace
-that submission. All settings below are variations on the same notebook (`custom_llm.py`, the
-script-mirror of `custom_llm.ipynb`), changing exactly one variable per run.
+My professor asked me to go further than the required 3,000-step baseline: train for
+longer, try a bigger model, and see how much "smarter" it actually gets. This is
+extra work I did under an **earlier version of this assignment, before the 48-case
+language test and the chat script existed** — see [README.md](README.md) for my
+actual, required submission (two experiments, the full test comparison, and chat
+proof). This page doesn't replace that. Every run below just changes one setting at
+a time on the same notebook (`custom_llm.py`, which is the script version of
+`custom_llm.ipynb`).
 
-**Runs**, all on the same synthetic classroom corpus (4,632 unique passages, seed 42, CPU,
-learning rate 0.001, warmup + cosine decay):
+**Runs**, all on the same made-up classroom corpus (4,632 unique passages, seed 42,
+CPU, learning rate 0.001, with warmup and cosine decay):
 
-| Run | Steps | Params | Elapsed | Final train loss | Final val loss |
+| Run | Steps | Params | Time | Final train loss | Final val loss |
 |---|---|---|---|---|---|
 | Baseline (required submission) | 3,000 | 111,872 | 9.7s | 0.6956 | **0.7057** |
 | More steps | 5,000 | 111,872 | 13.7s | 0.6976 | **0.7068** |
 | More steps | 20,000 | 111,872 | 55.4s | 0.6859 | **0.6969** |
 | More steps | 100,000 | 111,872 | 317.0s (5m17s) | 0.6860 | **0.8523** |
-| Bigger model (4 blocks, 8 heads, 128-dim, 64-token context) | 20,000 | 818,944 (7.3x) | 197.2s | 0.6851 | **0.6976** |
+| Bigger model (4 blocks, 8 heads, 128-dim, 64-token context) | 20,000 | 818,944 (7.3x bigger) | 197.2s | 0.6851 | **0.6976** |
 
-Full artifacts for each run: [experiments/steps5k/](experiments/steps5k/),
+All the files for each run are here: [experiments/steps5k/](experiments/steps5k/),
 [experiments/steps20k/](experiments/steps20k/), [experiments/steps100k/](experiments/steps100k/),
-[experiments/bigarch20k/](experiments/bigarch20k/) — same file set as the baseline's
-[archive_pre_eval_run/](archive_pre_eval_run/) folder (`history.json`, `config.json`,
-`checkpoint.json`, `model.pt`, `samples/`, `training_curves.svg`, etc. — this folder was called
-`evidence/` before the eval suite existed; renamed to make room for the two current required
-experiments). The scripts that generated these (`experiments/run_experiment.py`,
-`experiments/run_all.sh`) are included for reproducibility.
+[experiments/bigarch20k/](experiments/bigarch20k/) — same set of files as the
+baseline's [archive_pre_eval_run/](archive_pre_eval_run/) folder (`history.json`,
+`config.json`, `checkpoint.json`, `model.pt`, `samples/`, `training_curves.svg`, and
+so on — that folder used to be called `evidence/`, before the language test existed;
+I renamed it to make space for my two current required experiments). The scripts I
+used to make these (`experiments/run_experiment.py`, `experiments/run_all.sh`) are
+in the repo too, so anyone can redo this.
 
 ![validation loss vs training steps across all five runs, log x-axis](experiments/comparison_curves.svg)
 
-## Does more training make it "smarter"?
+## Does training longer make it "smarter"?
 
-**No, not past a point — and it can make things worse.** Validation loss drops from 0.706
-(3k steps) to 0.697 (20k steps), a small real improvement, then **rises to 0.852 at 100k
-steps** while training loss stays essentially flat (0.686). That's the textbook signature of
-overfitting: past ~20,000 steps the model keeps sharpening its fit to the training panel
-without generalizing any further — the validation panel actively gets worse. On this narrow,
-7-template corpus, more training budget does not straightforwardly mean a better model.
+**No, not after a certain point — and it can actually get worse.** The validation
+loss drops from 0.706 (3k steps) to 0.697 (20k steps), which is a small real
+improvement, but then it **goes back up to 0.852 at 100k steps**, even though the
+training loss stays almost flat (0.686) the whole time. That's a classic sign of
+overfitting: after about 20,000 steps, the model just keeps getting better at
+matching the exact training examples, without actually getting better at anything
+new — and the validation score gets worse because of it. On this small, repetitive
+corpus, training longer does not simply mean a better model.
 
-More strikingly: **the generated samples barely change at all past step 1,500**, in any of
-the five runs. Every run — 3k, 5k, 20k, even 100k steps — converges to the same handful of
-sentences (e.g. *"our school has a question about the new educator and lesson."*, *"the
-consumer compared the merchandise after checking the price."*, with only minor word swaps like
-"tutor" vs "educator" or "ordered" vs "compared"). If you only looked at generated text, you
-would have no way to tell the 3,000-step run from the 100,000-step run apart — even though
-their measured validation losses differ by 0.15 (0.706 vs 0.852). This is a useful reminder
-that eyeballing samples is a weak way to judge "smartness"; the numbers can diverge sharply
-while the small, fixed set of outputs the model tends to produce looks the same.
+What surprised me even more: **the generated text barely changes at all after step
+1,500**, in every single run. The 3k run, the 5k run, the 20k run, even the 100k
+run — they all end up producing almost the exact same handful of sentences (like
+*"our school has a question about the new educator and lesson."* or *"the consumer
+compared the merchandise after checking the price."*, with only tiny word swaps like
+"tutor" instead of "educator"). If I only looked at the generated text, I couldn't
+tell the 3,000-step run apart from the 100,000-step run — even though their
+validation losses are actually quite different (0.706 vs 0.852). This taught me that
+just reading the generated samples is not a reliable way to judge how "smart" a
+model is — the real numbers can be very different while the small set of sentences
+the model likes to produce looks the same.
 
 ## Does a bigger model make it "smarter"?
 
-**Not on this corpus.** The bigger architecture (4 blocks instead of 2, 8 heads instead of 4,
-128-dim embeddings instead of 64, 7.3x the parameters) reaches essentially the same validation
-loss at 20,000 steps as the small model at 20,000 steps (0.6976 vs 0.6969 — a difference smaller
-than the run-to-run noise already visible between the 5k and 20k small-model runs). Extra
-capacity doesn't buy a better fit, because the bottleneck here isn't the model — it's the
-**data**. The corpus only contains ~7 sentence templates over a 133-word vocabulary; both
-models have more than enough capacity to fully represent that, so adding parameters has nothing
-left to spend itself on. A bigger model would only start to pay off with a bigger, more varied
-corpus for it to actually need the extra capacity to represent.
+**Not on this corpus.** The bigger version of the model (4 blocks instead of 2, 8
+heads instead of 4, 128 numbers per embedding instead of 64, 7.3 times more
+parameters) ends up with basically the same validation loss at 20,000 steps as the
+small model at 20,000 steps (0.6976 vs 0.6969 — even smaller than the normal
+difference I already saw between the 5k and 20k runs of the small model). Extra size
+didn't help, because the real limit here isn't the model — it's the **data**. My
+corpus only has around 7 sentence patterns and 133 different words, and even the
+small model already has more than enough room to fully learn that. So giving it more
+parameters just gives it more room it doesn't need. A bigger model would probably
+only help if I also gave it a bigger, more varied corpus that actually needs that
+extra room.
 
-## What about the learned embeddings?
+## What about the words the model learned?
 
-I checked `customer`'s nearest neighbors (by cosine similarity over the full 64- or 128-number
-vector) across all five runs:
+I checked which words are closest to `customer` (using all 64 or 128 numbers of its
+embedding, not just a couple) across all five runs:
 
-| Run | Top-5 nearest neighbors of "customer" | Top similarity |
+| Run | Closest 5 words to "customer" | Top similarity |
 |---|---|---|
 | Baseline (3k) | client, buyer, subscriber, consumer, shopper | 0.985 |
 | 5k steps | client, buyer, consumer, subscriber, shopper | 0.990 |
 | 20k steps | consumer, client, buyer, shopper, subscriber | 0.696 |
 | 100k steps | client, consumer, buyer, shopper, subscriber | 0.902 |
-| Bigger arch, 20k | buyer, shopper, consumer, client, subscriber | 0.786 |
+| Bigger model, 20k | buyer, shopper, consumer, client, subscriber | 0.786 |
 
-The **set** of neighbors is identical (the same 5 retail-context words) in every single run,
-regardless of step count or model size — that grouping is learned almost immediately and stays
-stable. But the **similarity values** bounce around (0.70–0.99) without a clear trend tied to
-more training or a bigger model. That tells me the categorical structure (which words share a
-sentence slot) is the easy, fast part for this tiny model to learn, while the exact geometry of
-the embedding space is noisier and isn't something "more compute" reliably sharpens on a corpus
-this repetitive.
+The **same 5 words** show up every single time, no matter how long I trained or how
+big the model was — that grouping is learned almost right away and stays stable. But
+the actual **similarity numbers** jump around a lot (0.70 to 0.99) without any clear
+pattern tied to more training or a bigger model. To me, this says the model learns
+*which* words belong together very quickly and reliably, but the exact distances
+between them stay a bit noisy, and more training or more parameters doesn't really
+clean that up on a corpus this small and repetitive.
 
 ## Honest takeaway
 
-Scaling steps or model size on a fixed, narrow, synthetic corpus hits a ceiling almost
-immediately (well under 20,000 steps here), and pushing past it risks overfitting rather than
-improving anything. The real lever for a "smarter" model, per this corpus, would be a bigger and
-more varied **corpus** — not more steps or more parameters — which matches the "next experiment"
-I proposed in the main README (adding my own permitted text files via `corpus/`).
+On a small, repetitive, made-up corpus like this one, training for longer or using a
+bigger model hits a wall almost immediately (well before 20,000 steps here), and
+pushing past that wall risks making things worse instead of better. If I actually
+want a "smarter" model on this corpus, the thing that would really help is a bigger
+and more varied **corpus** — not more steps and not more parameters. That's exactly
+what led me to try the corpus-extension experiment described in the main
+[README.md](README.md).
 
-## Reproduce
+## How to reproduce this
 
 ```
 source .venv/bin/activate
@@ -98,6 +108,6 @@ python experiments/run_experiment.py steps20k 20000 64 4 2 48   # writes _exp_st
 python _exp_steps20k.py                                          # runs it, saves to llm_runs/
 ```
 `run_experiment.py <label> <steps> <n_embd> <n_head> <n_layer> <block_size> [learning_rate]`
-generates a parameterized copy of `custom_llm.py` with those settings substituted in, leaving
-the original notebook and script untouched. `experiments/run_all.sh` ran all four experiments
-above back to back.
+makes a copy of `custom_llm.py` with those settings swapped in, so it never touches
+the original notebook or script. `experiments/run_all.sh` is what I used to run all
+four experiments above, one after another.
