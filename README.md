@@ -8,6 +8,7 @@ piece of evidence so it can be reviewed without rerunning the notebook.
 - **Executed notebook:** [custom_llm.ipynb](custom_llm.ipynb) (run end-to-end, all outputs visible — open on GitHub to inspect without downloading)
 - **Starter project / assignment source:** [pepealonso95/custom-llm](https://github.com/pepealonso95/custom-llm), [ASSIGNMENT.md](ASSIGNMENT.md)
 - **Evidence folder:** [evidence/](evidence/) — the full results directory saved by the notebook's final run, plus [evidence_results.zip](evidence_results.zip) (the same folder zipped)
+- **Extended experiments (optional, requested by my professor):** [EXPERIMENTS.md](EXPERIMENTS.md) — more training steps (5k/20k/100k) and a 7x bigger model, testing whether the model actually gets "smarter." Doesn't replace anything required above.
 
 ## My choices and prediction
 
@@ -149,6 +150,13 @@ with `CORPUS = "classroom"` and rerun. I'd predict the unknown-token rate stays 
 text overlaps the existing vocabulary, but validation loss should rise and samples should look
 less repetitive, since a more naturalistic, less templated corpus is harder for a two-block,
 111K-parameter model to fully memorize in 3,000 steps.
+
+**Update — a different next experiment, actually run:** before I got to the corpus experiment
+above, my professor asked me to instead try more training steps and a bigger model, to see how
+much "smarter" the model gets. See [EXPERIMENTS.md](EXPERIMENTS.md): it doesn't get smarter past
+about 20,000 steps (validation loss gets *worse* by 100,000 — overfitting), and a 7.3x bigger
+model plateaus at the same loss as this baseline, confirming the real bottleneck is this narrow
+corpus, not steps or parameters — which is exactly what motivated the corpus experiment above.
 
 ## Reproduce and inspect
 

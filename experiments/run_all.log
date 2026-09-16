@@ -1,0 +1,591 @@
+=== starting steps5k at Tue Sep 15 18:10:02 PDT 2026 ===
+/Users/luizateixeira/Desktop/MBA/custom-llm/.venv/lib/python3.13/site-packages/torch/_subclasses/functional_tensor.py:368: UserWarning: Failed to initialize NumPy: No module named 'numpy' (Triggered internally at /Users/runner/work/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:84.)
+  cpu = _conversion_method_template(device=torch.device("cpu"))
+PyTorch: 2.14.0 | device: cpu
+Source: Synthetic classroom sentences plus corpus folder files
+Imported files: 0 | new unique passages: 0
+Unique documents: 4,632 | train: 4,168 | validation: 464
+Five training documents:
+a review of interest helped us understand the different mortgage .
+we learned about the different consumer during a discussion of order .
+the important deposit was mentioned in the return report yesterday .
+a review of interest helped us understand the local loan .
+they compared the local apple with another apple at the kitchen .
+Vocabulary: 136 | held-out unknown-token rate: 0.00%
+Training unknown-token rate: 0.00% | omitted types: 0
+Text: a review of interest helped us understand the different mortgage . 
+Tokens: ['a', 'review', 'of', 'interest', 'helped', 'us', 'understand', 'the', 'different', 'mortgage', '.'] 
+IDs: [1, 4, 97, 71, 52, 47, 130, 128, 118, 35, 68, 3, 2]
+Input → target: [('<BOS>', 'a'), ('a', 'review'), ('review', 'of'), ('of', 'interest'), ('interest', 'helped'), ('helped', 'us'), ('us', 'understand'), ('understand', 'the'), ('the', 'different'), ('different', 'mortgage'), ('mortgage', '.'), ('.', '<EOS>')]
+number of parameters: 0.11M
+Embedding table: (136, 64) | parameters: 111872
+Word: customer | ID: 28 
+Initial vector: [-0.057591915130615234, -0.004809952806681395, 0.04263188689947128, 0.019338956102728844, 0.015643112361431122, -0.02882436476647854, 0.025609055534005165, 5.24539100297261e-05, 0.02470681630074978, 0.0206917654722929, 0.0073690167628228664, -0.033089615404605865, -0.05354786664247513, -0.0057429298758506775, -0.024166762828826904, -0.014716118574142456, 0.004685705993324518, -0.01045426819473505, -0.008381076157093048, -0.018258560448884964, -0.020133700221776962, 0.005098641850054264, -0.010916502214968204, -0.012633351609110832, 0.028389625251293182, -0.002631223062053323, -0.004071926232427359, 0.013641919940710068, -0.009891724213957787, -0.01671762578189373, 0.0019060791237279773, -0.001453503966331482, 0.01602652296423912, -0.005674875341355801, -0.0006723481928929687, -0.001290727173909545, -0.0073194727301597595, -0.0009307070868089795, 0.0015076251002028584, -0.004976638592779636, -0.028987018391489983, 0.018092988058924675, -0.007348013576120138, -0.005440254230052233, 0.01564120315015316, -0.004543505609035492, 0.04156793653964996, 0.052355434745550156, 0.02264268510043621, -0.015414278022944927, -0.025121202692389488, -0.006797463167458773, 0.02935275062918663, -0.0025336795952171087, 0.029801227152347565, -0.022797001525759697, -0.03023790940642357, 0.006436787545681, 0.050490811467170715, 0.007490998134016991, -0.01072286069393158, 0.02473733201622963, -0.014468739740550518, 0.013235915452241898]
+For a*a+a at a=2, the gradient is 5.0 (2*a+1).
+{'step': 0, 'training_loss': 4.923802852630615, 'validation_loss': 4.9246673583984375}
+
+Samples:
+pear professor bond doctor course harvest team physician journey checking buyer delivery traffic report the lecturer item offering and system <UNK> taste recommended mentioned bus question customer at mortgage nurse in instructor
+kitchen purchase journey product question discussion journey service . nurse local
+compared and purchase update mortgage question loan taste in market treatment learned another item bicycle product bicycle focused data and dentist recommended mango apple taxi bicycle delivery peach quality update student lesson
+important hospital juice patient return recommended deposit tutor returned understand kitchen student design ordered hospital treatment important package traffic with yesterday investment important of mentioned store ordered mortgage nurse shopper the station
+Step 500: batch loss 0.7866
+Step 1,000: batch loss 0.6979
+Step 1,500: batch loss 0.6965
+Step 2,000: batch loss 0.6911
+{'step': 2500, 'training_loss': 0.6898862719535828, 'validation_loss': 0.7040109634399414}
+
+Samples:
+our school has a question about the new tutor and lesson .
+a review of risk helped us understand the different deposit .
+the report about the nurse explains the health in detail .
+the consumer ordered the merchandise after checking the price .
+Step 3,000: batch loss 0.6945
+Step 3,500: batch loss 0.6881
+Step 4,000: batch loss 0.6894
+Step 4,500: batch loss 0.6912
+{'step': 5000, 'training_loss': 0.6975991725921631, 'validation_loss': 0.7068292498588562}
+
+Samples:
+our school has a question about the new educator and lesson .
+a review of risk helped us understand the different investment .
+the report about the nurse explains the health in detail .
+the consumer compared the merchandise after checking the price .
+Completed: 5000 | seconds: 13.66 
+First update: {'token': 'customer', 'coordinate': 0, 'before': -0.057591915130615234, 'gradient': -0.00040561475907452404, 'learning_rate': 1e-05, 'after': -0.057581909000873566}
+Word: customer 
+Trained vector: [0.04561267048120499, -0.025927936658263206, 0.12364830821752548, 0.11181299388408661, 0.06344261020421982, 0.03599422797560692, 0.1411927491426468, 0.08209968358278275, -0.06448637694120407, -0.016240501776337624, 0.023270271718502045, -0.05921505019068718, -0.023295901715755463, -0.07639724761247635, -0.1358521729707718, -0.00979880802333355, -0.1605837643146515, -0.14271962642669678, 0.002303475048393011, -0.06555593013763428, -0.07014170289039612, 0.0009847679175436497, -0.08814834803342819, -0.0015258187195286155, 0.015364368446171284, -0.05991024151444435, 0.11692801862955093, -0.03887827694416046, 0.02427034080028534, -0.14975053071975708, -0.07979852706193924, 0.0705711767077446, -0.028113095089793205, 0.1394495964050293, 0.07360769063234329, 0.0670357495546341, 0.01702025718986988, -0.15184873342514038, 0.09291619062423706, -0.021882422268390656, 0.0644468367099762, -0.02355279214680195, -0.139095276594162, 0.0344812236726284, -0.032663196325302124, -0.1089530661702156, 0.031114494428038597, 0.043552666902542114, -0.039790570735931396, -0.16355842351913452, 0.03501799330115318, -0.12655211985111237, -0.010400716215372086, 0.08666504919528961, 0.1087431088089943, 0.08843173831701279, 0.10753384977579117, 0.02020644024014473, 0.06565782427787781, 0.08401624858379364, 0.12673141062259674, -0.013374021276831627, 0.08786115795373917, -0.08560958504676819]
+Before predictions: [('customer', 0.016), ('bus', 0.0107), ('educator', 0.0104), ('us', 0.0103), ('application', 0.0101)]
+After predictions: [('ordered', 0.1949), ('reviewed', 0.194), ('recommended', 0.1778), ('selected', 0.1541), ('compared', 0.1326)]
+First-head attention: [[1.0, 0.0, 0.0], [0.5845823287963867, 0.4154176712036133, 0.0], [0.537321150302887, 0.4432133138179779, 0.01946558617055416]]
+Temperature comparison: {
+  "0.3": [
+    "our school has a question about the new educator and lesson .",
+    "the new deposit was mentioned in the risk report yesterday .",
+    "the report about the car explains the journey in detail .",
+    "the consumer ordered the brand after checking the price ."
+  ],
+  "0.8": [
+    "our school has a question about the new educator and lesson .",
+    "a review of risk helped us understand the different investment .",
+    "the report about the nurse explains the health in detail .",
+    "the consumer compared the merchandise after checking the price ."
+  ],
+  "1.2": [
+    "our school has a question about the new educator and lesson .",
+    "a review of risk helped us understand the different deposit .",
+    "the report about the nurse explains the health in detail .",
+    "the consumer compared the merchandise after checking the price ."
+  ]
+}
+<IPython.core.display.SVG object>
+/Users/luizateixeira/Desktop/MBA/custom-llm/llm_runs/20260916T011003_468059Z.zip
+Saved: llm_runs/20260916T011003_468059Z 
+Results ZIP: /Users/luizateixeira/Desktop/MBA/custom-llm/llm_runs/20260916T011003_468059Z.zip
+=== finished steps5k -> llm_runs/20260916T011003_468059Z at Tue Sep 15 18:10:18 PDT 2026 ===
+=== starting steps20k at Tue Sep 15 18:10:18 PDT 2026 ===
+/Users/luizateixeira/Desktop/MBA/custom-llm/.venv/lib/python3.13/site-packages/torch/_subclasses/functional_tensor.py:368: UserWarning: Failed to initialize NumPy: No module named 'numpy' (Triggered internally at /Users/runner/work/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:84.)
+  cpu = _conversion_method_template(device=torch.device("cpu"))
+PyTorch: 2.14.0 | device: cpu
+Source: Synthetic classroom sentences plus corpus folder files
+Imported files: 0 | new unique passages: 0
+Unique documents: 4,632 | train: 4,168 | validation: 464
+Five training documents:
+a review of interest helped us understand the different mortgage .
+we learned about the different consumer during a discussion of order .
+the important deposit was mentioned in the return report yesterday .
+a review of interest helped us understand the local loan .
+they compared the local apple with another apple at the kitchen .
+Vocabulary: 136 | held-out unknown-token rate: 0.00%
+Training unknown-token rate: 0.00% | omitted types: 0
+Text: a review of interest helped us understand the different mortgage . 
+Tokens: ['a', 'review', 'of', 'interest', 'helped', 'us', 'understand', 'the', 'different', 'mortgage', '.'] 
+IDs: [1, 4, 97, 71, 52, 47, 130, 128, 118, 35, 68, 3, 2]
+Input → target: [('<BOS>', 'a'), ('a', 'review'), ('review', 'of'), ('of', 'interest'), ('interest', 'helped'), ('helped', 'us'), ('us', 'understand'), ('understand', 'the'), ('the', 'different'), ('different', 'mortgage'), ('mortgage', '.'), ('.', '<EOS>')]
+number of parameters: 0.11M
+Embedding table: (136, 64) | parameters: 111872
+Word: customer | ID: 28 
+Initial vector: [-0.057591915130615234, -0.004809952806681395, 0.04263188689947128, 0.019338956102728844, 0.015643112361431122, -0.02882436476647854, 0.025609055534005165, 5.24539100297261e-05, 0.02470681630074978, 0.0206917654722929, 0.0073690167628228664, -0.033089615404605865, -0.05354786664247513, -0.0057429298758506775, -0.024166762828826904, -0.014716118574142456, 0.004685705993324518, -0.01045426819473505, -0.008381076157093048, -0.018258560448884964, -0.020133700221776962, 0.005098641850054264, -0.010916502214968204, -0.012633351609110832, 0.028389625251293182, -0.002631223062053323, -0.004071926232427359, 0.013641919940710068, -0.009891724213957787, -0.01671762578189373, 0.0019060791237279773, -0.001453503966331482, 0.01602652296423912, -0.005674875341355801, -0.0006723481928929687, -0.001290727173909545, -0.0073194727301597595, -0.0009307070868089795, 0.0015076251002028584, -0.004976638592779636, -0.028987018391489983, 0.018092988058924675, -0.007348013576120138, -0.005440254230052233, 0.01564120315015316, -0.004543505609035492, 0.04156793653964996, 0.052355434745550156, 0.02264268510043621, -0.015414278022944927, -0.025121202692389488, -0.006797463167458773, 0.02935275062918663, -0.0025336795952171087, 0.029801227152347565, -0.022797001525759697, -0.03023790940642357, 0.006436787545681, 0.050490811467170715, 0.007490998134016991, -0.01072286069393158, 0.02473733201622963, -0.014468739740550518, 0.013235915452241898]
+For a*a+a at a=2, the gradient is 5.0 (2*a+1).
+{'step': 0, 'training_loss': 4.923802852630615, 'validation_loss': 4.9246673583984375}
+
+Samples:
+pear professor bond doctor course harvest team physician journey checking buyer delivery traffic report the lecturer item offering and system <UNK> taste recommended mentioned bus question customer at mortgage nurse in instructor
+kitchen purchase journey product question discussion journey service . nurse local
+compared and purchase update mortgage question loan taste in market treatment learned another item bicycle product bicycle focused data and dentist recommended mango apple taxi bicycle delivery peach quality update student lesson
+important hospital juice patient return recommended deposit tutor returned understand kitchen student design ordered hospital treatment important package traffic with yesterday investment important of mentioned store ordered mortgage nurse shopper the station
+Step 500: batch loss 0.7862
+Step 1,000: batch loss 0.6977
+Step 1,500: batch loss 0.6964
+Step 2,000: batch loss 0.6959
+Step 2,500: batch loss 0.7030
+Step 3,000: batch loss 0.6971
+Step 3,500: batch loss 0.6871
+Step 4,000: batch loss 0.6953
+Step 4,500: batch loss 0.6959
+Step 5,000: batch loss 0.6972
+Step 5,500: batch loss 0.7089
+Step 6,000: batch loss 0.7007
+Step 6,500: batch loss 0.6850
+Step 7,000: batch loss 0.6942
+Step 7,500: batch loss 0.6879
+Step 8,000: batch loss 0.6791
+Step 8,500: batch loss 0.6792
+Step 9,000: batch loss 0.6930
+Step 9,500: batch loss 0.6825
+{'step': 10000, 'training_loss': 0.6875772476196289, 'validation_loss': 0.6991785168647766}
+
+Samples:
+our school has a question about the new tutor and lesson .
+a review of risk helped us understand the different investment .
+the report about the nurse explains the health in detail .
+the consumer compared the merchandise after checking the price .
+Step 10,500: batch loss 0.6978
+Step 11,000: batch loss 0.6893
+Step 11,500: batch loss 0.7005
+Step 12,000: batch loss 0.6835
+Step 12,500: batch loss 0.6865
+Step 13,000: batch loss 0.6793
+Step 13,500: batch loss 0.6838
+Step 14,000: batch loss 0.6957
+Step 14,500: batch loss 0.6892
+Step 15,000: batch loss 0.6872
+Step 15,500: batch loss 0.6915
+Step 16,000: batch loss 0.6828
+Step 16,500: batch loss 0.6922
+Step 17,000: batch loss 0.6893
+Step 17,500: batch loss 0.6759
+Step 18,000: batch loss 0.6834
+Step 18,500: batch loss 0.6802
+Step 19,000: batch loss 0.6844
+Step 19,500: batch loss 0.6838
+{'step': 20000, 'training_loss': 0.6859241724014282, 'validation_loss': 0.6968541741371155}
+
+Samples:
+our school has a question about the new educator and lesson .
+a review of risk helped us understand the different investment .
+the report about the nurse explains the health in detail .
+the consumer compared the merchandise after checking the price .
+Completed: 20000 | seconds: 55.41 
+First update: {'token': 'customer', 'coordinate': 0, 'before': -0.057591915130615234, 'gradient': -0.00040561475907452404, 'learning_rate': 1e-05, 'after': -0.057581909000873566}
+Word: customer 
+Trained vector: [0.025186337530612946, -0.0990421250462532, 0.004998018965125084, 0.007241916377097368, 0.04386495426297188, 0.07459219545125961, 0.1331072747707367, -0.119965098798275, -0.010403718799352646, -0.083799347281456, 0.07884763926267624, -0.07847616076469421, -0.05190505459904671, 0.10206588357686996, -0.052850231528282166, 0.09603177011013031, -0.14349506795406342, -0.13159452378749847, -0.02491767331957817, -0.018417641520500183, -0.011559460312128067, 0.01240957248955965, -0.2597835659980774, -0.017127906903624535, 0.09058624505996704, -0.012285084463655949, 0.07137531042098999, 0.0071173012256622314, -0.0027480609714984894, -0.14223609864711761, -0.06421230733394623, 0.06709156185388565, 0.07449252903461456, 0.09686235338449478, 0.03134230896830559, 0.07853711396455765, 0.024000613018870354, -0.09637145698070526, 0.011415570043027401, 0.1007150188088417, -0.059023838490247726, -0.08733684569597244, -0.11011579632759094, 0.025016959756612778, -0.011916816234588623, -0.09484486281871796, 0.09718826413154602, -0.0853949710726738, 0.006060478743165731, -0.15168681740760803, 0.08720852434635162, -0.09056098014116287, -0.1221008375287056, 0.07043906301259995, 0.04218233749270439, 0.08671139180660248, 0.058196403086185455, 0.12334880232810974, 0.1195468008518219, 0.025341805070638657, 0.09738323837518692, 0.005970766767859459, 0.05917134881019592, 0.1244174912571907]
+Before predictions: [('customer', 0.016), ('bus', 0.0107), ('educator', 0.0104), ('us', 0.0103), ('application', 0.0101)]
+After predictions: [('recommended', 0.1864), ('reviewed', 0.175), ('compared', 0.1679), ('ordered', 0.1672), ('selected', 0.1628)]
+First-head attention: [[1.0, 0.0, 0.0], [0.5239158272743225, 0.4760841727256775, 0.0], [0.5836690068244934, 0.3759894073009491, 0.040341563522815704]]
+Temperature comparison: {
+  "0.3": [
+    "our school has a question about the new tutor and lesson .",
+    "the new deposit was mentioned in the risk report yesterday .",
+    "the report about the car explains the journey in detail .",
+    "the local consumer was mentioned in the purchase report yesterday ."
+  ],
+  "0.8": [
+    "our school has a question about the new educator and lesson .",
+    "a review of risk helped us understand the different investment .",
+    "the report about the nurse explains the health in detail .",
+    "the consumer compared the merchandise after checking the price ."
+  ],
+  "1.2": [
+    "our school has a question about the new educator and lesson .",
+    "a review of risk helped us understand the different investment .",
+    "the report about the nurse explains the health in detail .",
+    "the consumer compared the merchandise after checking the price ."
+  ]
+}
+<IPython.core.display.SVG object>
+/Users/luizateixeira/Desktop/MBA/custom-llm/llm_runs/20260916T011018_700903Z.zip
+Saved: llm_runs/20260916T011018_700903Z 
+Results ZIP: /Users/luizateixeira/Desktop/MBA/custom-llm/llm_runs/20260916T011018_700903Z.zip
+=== finished steps20k -> llm_runs/20260916T011018_700903Z at Tue Sep 15 18:11:15 PDT 2026 ===
+=== starting steps100k at Tue Sep 15 18:11:15 PDT 2026 ===
+/Users/luizateixeira/Desktop/MBA/custom-llm/.venv/lib/python3.13/site-packages/torch/_subclasses/functional_tensor.py:368: UserWarning: Failed to initialize NumPy: No module named 'numpy' (Triggered internally at /Users/runner/work/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:84.)
+  cpu = _conversion_method_template(device=torch.device("cpu"))
+PyTorch: 2.14.0 | device: cpu
+Source: Synthetic classroom sentences plus corpus folder files
+Imported files: 0 | new unique passages: 0
+Unique documents: 4,632 | train: 4,168 | validation: 464
+Five training documents:
+a review of interest helped us understand the different mortgage .
+we learned about the different consumer during a discussion of order .
+the important deposit was mentioned in the return report yesterday .
+a review of interest helped us understand the local loan .
+they compared the local apple with another apple at the kitchen .
+Vocabulary: 136 | held-out unknown-token rate: 0.00%
+Training unknown-token rate: 0.00% | omitted types: 0
+Text: a review of interest helped us understand the different mortgage . 
+Tokens: ['a', 'review', 'of', 'interest', 'helped', 'us', 'understand', 'the', 'different', 'mortgage', '.'] 
+IDs: [1, 4, 97, 71, 52, 47, 130, 128, 118, 35, 68, 3, 2]
+Input → target: [('<BOS>', 'a'), ('a', 'review'), ('review', 'of'), ('of', 'interest'), ('interest', 'helped'), ('helped', 'us'), ('us', 'understand'), ('understand', 'the'), ('the', 'different'), ('different', 'mortgage'), ('mortgage', '.'), ('.', '<EOS>')]
+number of parameters: 0.11M
+Embedding table: (136, 64) | parameters: 111872
+Word: customer | ID: 28 
+Initial vector: [-0.057591915130615234, -0.004809952806681395, 0.04263188689947128, 0.019338956102728844, 0.015643112361431122, -0.02882436476647854, 0.025609055534005165, 5.24539100297261e-05, 0.02470681630074978, 0.0206917654722929, 0.0073690167628228664, -0.033089615404605865, -0.05354786664247513, -0.0057429298758506775, -0.024166762828826904, -0.014716118574142456, 0.004685705993324518, -0.01045426819473505, -0.008381076157093048, -0.018258560448884964, -0.020133700221776962, 0.005098641850054264, -0.010916502214968204, -0.012633351609110832, 0.028389625251293182, -0.002631223062053323, -0.004071926232427359, 0.013641919940710068, -0.009891724213957787, -0.01671762578189373, 0.0019060791237279773, -0.001453503966331482, 0.01602652296423912, -0.005674875341355801, -0.0006723481928929687, -0.001290727173909545, -0.0073194727301597595, -0.0009307070868089795, 0.0015076251002028584, -0.004976638592779636, -0.028987018391489983, 0.018092988058924675, -0.007348013576120138, -0.005440254230052233, 0.01564120315015316, -0.004543505609035492, 0.04156793653964996, 0.052355434745550156, 0.02264268510043621, -0.015414278022944927, -0.025121202692389488, -0.006797463167458773, 0.02935275062918663, -0.0025336795952171087, 0.029801227152347565, -0.022797001525759697, -0.03023790940642357, 0.006436787545681, 0.050490811467170715, 0.007490998134016991, -0.01072286069393158, 0.02473733201622963, -0.014468739740550518, 0.013235915452241898]
+For a*a+a at a=2, the gradient is 5.0 (2*a+1).
+{'step': 0, 'training_loss': 4.923802852630615, 'validation_loss': 4.9246673583984375}
+
+Samples:
+pear professor bond doctor course harvest team physician journey checking buyer delivery traffic report the lecturer item offering and system <UNK> taste recommended mentioned bus question customer at mortgage nurse in instructor
+kitchen purchase journey product question discussion journey service . nurse local
+compared and purchase update mortgage question loan taste in market treatment learned another item bicycle product bicycle focused data and dentist recommended mango apple taxi bicycle delivery peach quality update student lesson
+important hospital juice patient return recommended deposit tutor returned understand kitchen student design ordered hospital treatment important package traffic with yesterday investment important of mentioned store ordered mortgage nurse shopper the station
+Step 500: batch loss 0.7862
+Step 1,000: batch loss 0.6977
+Step 1,500: batch loss 0.6963
+Step 2,000: batch loss 0.6961
+Step 2,500: batch loss 0.7020
+Step 3,000: batch loss 0.6978
+Step 3,500: batch loss 0.6877
+Step 4,000: batch loss 0.6959
+Step 4,500: batch loss 0.6952
+Step 5,000: batch loss 0.7007
+Step 5,500: batch loss 0.7082
+Step 6,000: batch loss 0.7043
+Step 6,500: batch loss 0.6855
+Step 7,000: batch loss 0.6968
+Step 7,500: batch loss 0.6881
+Step 8,000: batch loss 0.6825
+Step 8,500: batch loss 0.6782
+Step 9,000: batch loss 0.6912
+Step 9,500: batch loss 0.6839
+Step 10,000: batch loss 0.6746
+Step 10,500: batch loss 0.6976
+Step 11,000: batch loss 0.6953
+Step 11,500: batch loss 0.7046
+Step 12,000: batch loss 0.6870
+Step 12,500: batch loss 0.6956
+Step 13,000: batch loss 0.6829
+Step 13,500: batch loss 0.6838
+Step 14,000: batch loss 0.7018
+Step 14,500: batch loss 0.6948
+Step 15,000: batch loss 0.6923
+Step 15,500: batch loss 0.6963
+Step 16,000: batch loss 0.6860
+Step 16,500: batch loss 0.6944
+Step 17,000: batch loss 0.6978
+Step 17,500: batch loss 0.6726
+Step 18,000: batch loss 0.6860
+Step 18,500: batch loss 0.6810
+Step 19,000: batch loss 0.6854
+Step 19,500: batch loss 0.6868
+Step 20,000: batch loss 0.6832
+Step 20,500: batch loss 0.6837
+Step 21,000: batch loss 0.6891
+Step 21,500: batch loss 0.6891
+Step 22,000: batch loss 0.7043
+Step 22,500: batch loss 0.6911
+Step 23,000: batch loss 0.6834
+Step 23,500: batch loss 0.6887
+Step 24,000: batch loss 0.6821
+Step 24,500: batch loss 0.6764
+Step 25,000: batch loss 0.6861
+Step 25,500: batch loss 0.6849
+Step 26,000: batch loss 0.6896
+Step 26,500: batch loss 0.6873
+Step 27,000: batch loss 0.6733
+Step 27,500: batch loss 0.6805
+Step 28,000: batch loss 0.6831
+Step 28,500: batch loss 0.6953
+Step 29,000: batch loss 0.6894
+Step 29,500: batch loss 0.6893
+Step 30,000: batch loss 0.6814
+Step 30,500: batch loss 0.6862
+Step 31,000: batch loss 0.6820
+Step 31,500: batch loss 0.6845
+Step 32,000: batch loss 0.6925
+Step 32,500: batch loss 0.6880
+Step 33,000: batch loss 0.6636
+Step 33,500: batch loss 0.6755
+Step 34,000: batch loss 0.6849
+Step 34,500: batch loss 0.6873
+Step 35,000: batch loss 0.6692
+Step 35,500: batch loss 0.6845
+Step 36,000: batch loss 0.6787
+Step 36,500: batch loss 0.6778
+Step 37,000: batch loss 0.6919
+Step 37,500: batch loss 0.6694
+Step 38,000: batch loss 0.6915
+Step 38,500: batch loss 0.6822
+Step 39,000: batch loss 0.6769
+Step 39,500: batch loss 0.6950
+Step 40,000: batch loss 0.7008
+Step 40,500: batch loss 0.6827
+Step 41,000: batch loss 0.6754
+Step 41,500: batch loss 0.6855
+Step 42,000: batch loss 0.6833
+Step 42,500: batch loss 0.6786
+Step 43,000: batch loss 0.6814
+Step 43,500: batch loss 0.6746
+Step 44,000: batch loss 0.6686
+Step 44,500: batch loss 0.6788
+Step 45,000: batch loss 0.6840
+Step 45,500: batch loss 0.6802
+Step 46,000: batch loss 0.6841
+Step 46,500: batch loss 0.6814
+Step 47,000: batch loss 0.6785
+Step 47,500: batch loss 0.6763
+Step 48,000: batch loss 0.6865
+Step 48,500: batch loss 0.6726
+Step 49,000: batch loss 0.6817
+Step 49,500: batch loss 0.6808
+{'step': 50000, 'training_loss': 0.6781396269798279, 'validation_loss': 0.7155453562736511}
+
+Samples:
+our school has a question about the new tutor and lesson .
+a review of risk helped us understand the different deposit .
+the report about the nurse explains the health in detail .
+the consumer compared the offering after checking the price .
+Step 50,500: batch loss 0.6711
+Step 51,000: batch loss 0.6775
+Step 51,500: batch loss 0.6817
+Step 52,000: batch loss 0.7047
+Step 52,500: batch loss 0.6737
+Step 53,000: batch loss 0.6760
+Step 53,500: batch loss 0.6888
+Step 54,000: batch loss 0.6833
+Step 54,500: batch loss 0.6751
+Step 55,000: batch loss 0.6873
+Step 55,500: batch loss 0.6873
+Step 56,000: batch loss 0.6863
+Step 56,500: batch loss 0.6940
+Step 57,000: batch loss 0.6807
+Step 57,500: batch loss 0.6810
+Step 58,000: batch loss 0.6893
+Step 58,500: batch loss 0.6923
+Step 59,000: batch loss 0.6787
+Step 59,500: batch loss 0.6824
+Step 60,000: batch loss 0.6801
+Step 60,500: batch loss 0.6808
+Step 61,000: batch loss 0.6817
+Step 61,500: batch loss 0.6770
+Step 62,000: batch loss 0.6832
+Step 62,500: batch loss 0.6793
+Step 63,000: batch loss 0.6785
+Step 63,500: batch loss 0.6845
+Step 64,000: batch loss 0.6851
+Step 64,500: batch loss 0.6833
+Step 65,000: batch loss 0.6783
+Step 65,500: batch loss 0.6898
+Step 66,000: batch loss 0.6849
+Step 66,500: batch loss 0.6805
+Step 67,000: batch loss 0.6810
+Step 67,500: batch loss 0.6792
+Step 68,000: batch loss 0.6757
+Step 68,500: batch loss 0.6841
+Step 69,000: batch loss 0.6807
+Step 69,500: batch loss 0.6757
+Step 70,000: batch loss 0.6821
+Step 70,500: batch loss 0.6837
+Step 71,000: batch loss 0.6814
+Step 71,500: batch loss 0.6842
+Step 72,000: batch loss 0.6887
+Step 72,500: batch loss 0.6805
+Step 73,000: batch loss 0.6781
+Step 73,500: batch loss 0.6828
+Step 74,000: batch loss 0.6789
+Step 74,500: batch loss 0.6780
+Step 75,000: batch loss 0.6820
+Step 75,500: batch loss 0.6772
+Step 76,000: batch loss 0.6766
+Step 76,500: batch loss 0.6785
+Step 77,000: batch loss 0.6749
+Step 77,500: batch loss 0.6783
+Step 78,000: batch loss 0.6759
+Step 78,500: batch loss 0.6731
+Step 79,000: batch loss 0.6802
+Step 79,500: batch loss 0.6788
+Step 80,000: batch loss 0.6848
+Step 80,500: batch loss 0.6766
+Step 81,000: batch loss 0.6820
+Step 81,500: batch loss 0.6814
+Step 82,000: batch loss 0.6829
+Step 82,500: batch loss 0.6769
+Step 83,000: batch loss 0.6745
+Step 83,500: batch loss 0.6813
+Step 84,000: batch loss 0.6838
+Step 84,500: batch loss 0.6834
+Step 85,000: batch loss 0.6892
+Step 85,500: batch loss 0.6814
+Step 86,000: batch loss 0.6842
+Step 86,500: batch loss 0.6633
+Step 87,000: batch loss 0.6824
+Step 87,500: batch loss 0.6860
+Step 88,000: batch loss 0.6842
+Step 88,500: batch loss 0.6738
+Step 89,000: batch loss 0.6875
+Step 89,500: batch loss 0.6665
+Step 90,000: batch loss 0.6770
+Step 90,500: batch loss 0.6739
+Step 91,000: batch loss 0.6935
+Step 91,500: batch loss 0.6775
+Step 92,000: batch loss 0.6789
+Step 92,500: batch loss 0.6835
+Step 93,000: batch loss 0.6770
+Step 93,500: batch loss 0.6866
+Step 94,000: batch loss 0.6772
+Step 94,500: batch loss 0.6800
+Step 95,000: batch loss 0.6825
+Step 95,500: batch loss 0.6769
+Step 96,000: batch loss 0.6735
+Step 96,500: batch loss 0.6782
+Step 97,000: batch loss 0.6744
+Step 97,500: batch loss 0.6810
+Step 98,000: batch loss 0.6733
+Step 98,500: batch loss 0.6824
+Step 99,000: batch loss 0.6861
+Step 99,500: batch loss 0.6821
+{'step': 100000, 'training_loss': 0.6859738826751709, 'validation_loss': 0.8522831797599792}
+
+Samples:
+our school has a question about the new tutor and lesson .
+a review of risk helped us understand the different investment .
+the report about the nurse explains the health in detail .
+the consumer compared the offering after checking the price .
+Completed: 100000 | seconds: 316.97 
+First update: {'token': 'customer', 'coordinate': 0, 'before': -0.057591915130615234, 'gradient': -0.00040561475907452404, 'learning_rate': 1e-05, 'after': -0.057581909000873566}
+Word: customer 
+Trained vector: [0.2767561674118042, 0.36577460169792175, -0.17825238406658173, -0.20089924335479736, -0.10338117927312851, -0.4251909852027893, -0.1558372974395752, 0.41528934240341187, -0.16604217886924744, -0.07777188718318939, -0.1836690455675125, -0.4054800271987915, -0.38765406608581543, 0.006074615754187107, -0.2671832740306854, 0.5511178970336914, -0.062288299202919006, 0.11734136193990707, 0.4333105981349945, 0.4044167399406433, 0.2441440224647522, 0.30804547667503357, -0.42955470085144043, 0.00797948893159628, -0.073469378054142, -0.05500346049666405, 0.37937256693840027, -0.1370825618505478, 0.2693440616130829, -0.3206998109817505, -0.039244405925273895, 0.3350478708744049, 0.4596822261810303, -0.14264212548732758, -0.059953588992357254, 0.2165391594171524, 0.23838523030281067, 0.3096962571144104, -0.18764643371105194, 0.5012884736061096, -0.32780203223228455, 0.18717868626117706, 0.23290197551250458, -0.1992097795009613, -0.0018068008357658982, 0.22188007831573486, 0.2131464034318924, -0.2842533588409424, -0.13683022558689117, -0.10460977256298065, 0.4510916471481323, 0.29531875252723694, -0.553217887878418, -0.08004997670650482, 0.05213213339447975, 0.08125349879264832, -0.10295594483613968, 0.26332634687423706, 0.5718596577644348, -0.28370359539985657, 0.061727169901132584, 0.3247391879558563, -0.12742111086845398, 0.6225726008415222]
+Before predictions: [('customer', 0.016), ('bus', 0.0107), ('educator', 0.0104), ('us', 0.0103), ('application', 0.0101)]
+After predictions: [('recommended', 0.1953), ('selected', 0.1655), ('ordered', 0.1645), ('compared', 0.1516), ('reviewed', 0.1492)]
+First-head attention: [[1.0, 0.0, 0.0], [0.4485398530960083, 0.5514601469039917, 0.0], [0.6245071291923523, 0.21295814216136932, 0.1625346690416336]]
+Temperature comparison: {
+  "0.3": [
+    "our school has a question about the new tutor and lesson .",
+    "the new deposit was mentioned in the risk report yesterday .",
+    "the report about the car explains the traffic in detail .",
+    "the local consumer was mentioned in the purchase report yesterday ."
+  ],
+  "0.8": [
+    "our school has a question about the new tutor and lesson .",
+    "a review of risk helped us understand the different investment .",
+    "the report about the nurse explains the health in detail .",
+    "the consumer compared the offering after checking the price ."
+  ],
+  "1.2": [
+    "our school has a question about the new tutor and lesson .",
+    "a review of risk helped us understand the different deposit .",
+    "the report about the nurse explains the health in detail .",
+    "the consumer compared the offering after checking the price ."
+  ]
+}
+<IPython.core.display.SVG object>
+/Users/luizateixeira/Desktop/MBA/custom-llm/llm_runs/20260916T011115_752170Z.zip
+Saved: llm_runs/20260916T011115_752170Z 
+Results ZIP: /Users/luizateixeira/Desktop/MBA/custom-llm/llm_runs/20260916T011115_752170Z.zip
+=== finished steps100k -> llm_runs/20260916T011115_752170Z at Tue Sep 15 18:16:33 PDT 2026 ===
+=== starting bigarch20k at Tue Sep 15 18:16:33 PDT 2026 ===
+/Users/luizateixeira/Desktop/MBA/custom-llm/.venv/lib/python3.13/site-packages/torch/_subclasses/functional_tensor.py:368: UserWarning: Failed to initialize NumPy: No module named 'numpy' (Triggered internally at /Users/runner/work/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:84.)
+  cpu = _conversion_method_template(device=torch.device("cpu"))
+PyTorch: 2.14.0 | device: cpu
+Source: Synthetic classroom sentences plus corpus folder files
+Imported files: 0 | new unique passages: 0
+Unique documents: 4,632 | train: 4,168 | validation: 464
+Five training documents:
+a review of interest helped us understand the different mortgage .
+we learned about the different consumer during a discussion of order .
+the important deposit was mentioned in the return report yesterday .
+a review of interest helped us understand the local loan .
+they compared the local apple with another apple at the kitchen .
+Vocabulary: 136 | held-out unknown-token rate: 0.00%
+Training unknown-token rate: 0.00% | omitted types: 0
+Text: a review of interest helped us understand the different mortgage . 
+Tokens: ['a', 'review', 'of', 'interest', 'helped', 'us', 'understand', 'the', 'different', 'mortgage', '.'] 
+IDs: [1, 4, 97, 71, 52, 47, 130, 128, 118, 35, 68, 3, 2]
+Input → target: [('<BOS>', 'a'), ('a', 'review'), ('review', 'of'), ('of', 'interest'), ('interest', 'helped'), ('helped', 'us'), ('us', 'understand'), ('understand', 'the'), ('the', 'different'), ('different', 'mortgage'), ('mortgage', '.'), ('.', '<EOS>')]
+number of parameters: 0.81M
+Embedding table: (136, 128) | parameters: 818944
+Word: customer | ID: 28 
+Initial vector: [-0.036032985895872116, 0.012670625932514668, 0.03966870158910751, -0.004607029724866152, 0.017448797821998596, -0.002144187455996871, 0.02125733159482479, 0.018445555120706558, -0.006015498656779528, 0.007951625622808933, 0.008378186263144016, -0.028078172355890274, 0.023392880335450172, 0.012726536951959133, -0.0028355068061500788, 0.009783289395272732, 0.0071047209203243256, 0.01767682656645775, 0.029245711863040924, 0.0136225875467062, 0.009746999479830265, -0.04742781072854996, 0.007301297038793564, -0.011186954565346241, 0.02232317626476288, 0.020510908216238022, 0.01818140409886837, -0.028931766748428345, -0.01180562749505043, 0.01380675844848156, 0.012888513505458832, 0.014298345893621445, -0.03471168503165245, 0.03870043531060219, 0.0033066209871321917, -0.012445930391550064, -0.006158004980534315, -0.05175691843032837, -0.007457652594894171, -0.02610795944929123, -0.001263564103282988, -0.0029318949673324823, -0.013879552483558655, -0.030327538028359413, -0.025390198454260826, -0.05914434790611267, -0.03143734857439995, -0.024061262607574463, 0.021732423454523087, 0.011104023084044456, -0.024215536192059517, 0.05536774918437004, -0.006128645967692137, -0.01395350880920887, 0.03500749543309212, 0.008100192062556744, 0.038452837616205215, -0.013392984867095947, 0.0029736673459410667, -0.02936275117099285, -0.013070250861346722, -0.003596927970647812, 0.01786639727652073, 0.005101027432829142, 0.030089132487773895, 0.0017320929327979684, -0.002629353664815426, -0.005108014680445194, -0.030918890610337257, 0.013643786311149597, 0.03329375758767128, 0.01078048162162304, -0.01853695511817932, 0.008663501590490341, 0.012202945537865162, -0.012470770627260208, -0.004796404857188463, 0.018219074234366417, 0.016953272745013237, -0.008205398917198181, -0.0022854397539049387, 0.019379306584596634, 0.0073018805123865604, -0.01599714905023575, -0.010529391467571259, 0.02638126350939274, -0.014646624214947224, -0.04332403093576431, 0.018562473356723785, 0.003963501658290625, -0.013534589670598507, -0.010221435688436031, 0.028993023559451103, 0.0065255677327513695, -0.005892342422157526, -0.008246793411672115, -0.004759508650749922, -0.02270953543484211, -0.004356708377599716, -0.004488999955356121, 0.023065974935889244, -0.019485482946038246, -0.04833049699664116, -0.005879242438822985, -0.00996764563024044, 0.03851550072431564, -0.020992418751120567, 0.017079321667551994, -0.0061086975038051605, -0.007432314567267895, -0.0005873548216186464, -0.03606428951025009, -0.008224161341786385, 0.03873062878847122, -0.021907184273004532, -0.028142550960183144, 0.008274591527879238, -0.013585896231234074, -0.0030853322241455317, 0.024557825177907944, -0.014879086054861546, 0.026257693767547607, -0.023247743025422096, -0.02295895852148533, -0.005784307140856981, 0.0008162516751326621, -0.010475152172148228, 0.0073881628923118114]
+For a*a+a at a=2, the gradient is 5.0 (2*a+1).
+{'step': 0, 'training_loss': 4.961330890655518, 'validation_loss': 4.970396518707275}
+
+Samples:
+pear professor bond doctor course harvest team physician journey checking buyer delivery our on the deposit item offering and system <UNK> taste recommended mentioned bus question customer at mortgage nurse in instructor
+kitchen purchase journey product question new journey service . nurse local
+compared and discussed update detail taste loan taste in market treatment learned another item bicycle product bicycle focused data returned dentist recommended mango apple taxi bicycle delivery package quality update student return
+important hospital bank patient return recommended deposit tutor returned understand kitchen student design ordered hospital treatment important package traffic with offering investment quality of mentioned buyer ordered mortgage nurse about the station
+Step 500: batch loss 0.7353
+Step 1,000: batch loss 0.6979
+Step 1,500: batch loss 0.6943
+Step 2,000: batch loss 0.7033
+Step 2,500: batch loss 0.7015
+Step 3,000: batch loss 0.6988
+Step 3,500: batch loss 0.6854
+Step 4,000: batch loss 0.6971
+Step 4,500: batch loss 0.6993
+Step 5,000: batch loss 0.7014
+Step 5,500: batch loss 0.7103
+Step 6,000: batch loss 0.6985
+Step 6,500: batch loss 0.6824
+Step 7,000: batch loss 0.6942
+Step 7,500: batch loss 0.6830
+Step 8,000: batch loss 0.6811
+Step 8,500: batch loss 0.6769
+Step 9,000: batch loss 0.6921
+Step 9,500: batch loss 0.6795
+{'step': 10000, 'training_loss': 0.6860411167144775, 'validation_loss': 0.6966227889060974}
+
+Samples:
+our school has a question about the new tutor and lesson .
+a review of risk helped us understand the different investment .
+the report about the nurse explains the health in detail .
+the consumer compared the merchandise after checking the price .
+Step 10,500: batch loss 0.6944
+Step 11,000: batch loss 0.6874
+Step 11,500: batch loss 0.6991
+Step 12,000: batch loss 0.6850
+Step 12,500: batch loss 0.6871
+Step 13,000: batch loss 0.6789
+Step 13,500: batch loss 0.6824
+Step 14,000: batch loss 0.6959
+Step 14,500: batch loss 0.6881
+Step 15,000: batch loss 0.6860
+Step 15,500: batch loss 0.6898
+Step 16,000: batch loss 0.6833
+Step 16,500: batch loss 0.6897
+Step 17,000: batch loss 0.6900
+Step 17,500: batch loss 0.6756
+Step 18,000: batch loss 0.6829
+Step 18,500: batch loss 0.6799
+Step 19,000: batch loss 0.6833
+Step 19,500: batch loss 0.6841
+{'step': 20000, 'training_loss': 0.6851097941398621, 'validation_loss': 0.6976245641708374}
+
+Samples:
+our school has a question about the new educator and lesson .
+a review of risk helped us understand the different investment .
+the report about the nurse explains the health in detail .
+the consumer compared the merchandise after checking the price .
+Completed: 20000 | seconds: 197.16 
+First update: {'token': 'customer', 'coordinate': 0, 'before': -0.036032985895872116, 'gradient': 0.0029696649871766567, 'learning_rate': 1e-05, 'after': -0.03604298084974289}
+Word: customer 
+Trained vector: [0.13465175032615662, 0.07444486767053604, 0.006775140296667814, 0.030111243948340416, -0.03814588487148285, 0.03181023150682449, -0.010908853262662888, -0.047929953783750534, -0.01713186874985695, -0.08704666048288345, -0.08437741547822952, -0.08402558416128159, -0.15260854363441467, 0.05848715454339981, -0.12845319509506226, -0.012258835136890411, -0.16737902164459229, -0.12555409967899323, 0.007555244490504265, -0.08046376705169678, -0.1358775496482849, -0.041348833590745926, 0.04250534623861313, 0.025814825668931007, 0.1367664337158203, 0.09066899120807648, -0.005580080207437277, -0.03989938646554947, -0.042509108781814575, -0.046447619795799255, -0.029431819915771484, 0.09469133615493774, -0.027069449424743652, 0.06276188790798187, -0.023249613121151924, 0.0064330496825277805, -0.02717183530330658, -0.018194865435361862, -0.11929295212030411, 0.09969790279865265, -0.0869627520442009, 0.18982915580272675, -0.0188980121165514, 0.08251597732305527, 0.020576419308781624, 0.038313571363687515, -0.1407989114522934, 0.018734842538833618, -0.03468569740653038, 0.04268188029527664, -0.0993162989616394, 0.01593673788011074, -0.06396356225013733, 0.05398176237940788, 0.06612810492515564, 0.11514558643102646, -0.09686833620071411, 0.04684673249721527, -0.034052904695272446, 0.1547679901123047, -0.10198470950126648, 0.045042578130960464, -0.005493117496371269, -0.15339836478233337, -0.06573160737752914, -0.15597304701805115, -0.05204794555902481, -0.0194101519882679, -0.019777821376919746, 0.08371206372976303, -0.17210204899311066, -0.011914505623281002, -0.10637055337429047, 0.09754511713981628, -0.03554542735219002, 0.0353124774992466, 0.29543790221214294, -0.04383821412920952, 0.08554266393184662, -0.116460882127285, 0.1903105080127716, 0.0010446301894262433, 0.11014851927757263, 0.06525369733572006, 0.030497904866933823, -0.08445693552494049, 0.03974825516343117, -0.035879310220479965, -0.11816196888685226, 0.042125407606363297, -0.02770705707371235, -0.08494758605957031, 0.15834347903728485, -0.037027012556791306, -0.10405754297971725, 0.016198426485061646, 0.07883763313293457, -0.1702336221933365, -0.14721092581748962, -0.04918406903743744, 0.1786588877439499, -0.15449750423431396, -0.10968732833862305, -0.1552838832139969, -0.14803852140903473, -0.10819423943758011, 0.04127323627471924, 0.030217178165912628, 0.01998046785593033, 0.05959229916334152, -0.06712615489959717, 0.10822834819555283, 0.055561844259500504, 0.0898117944598198, 0.046063270419836044, -0.09494269639253616, -0.0196028221398592, 0.18050403892993927, 0.037720102816820145, -0.03920799866318703, 0.07372081279754639, 0.03675056993961334, -0.14439518749713898, 0.03304494544863701, -0.1388453096151352, 0.04831657558679581, -0.04645444452762604, 0.0718688815832138]
+Before predictions: [('customer', 0.0224), ('our', 0.0112), ('checking', 0.0111), ('store', 0.0111), ('investment', 0.0107)]
+After predictions: [('recommended', 0.1842), ('reviewed', 0.1773), ('compared', 0.1706), ('ordered', 0.1686), ('selected', 0.1595)]
+First-head attention: [[1.0, 0.0, 0.0], [0.4045162498950958, 0.5954837203025818, 0.0], [0.1331910341978073, 0.1660979837179184, 0.7007110118865967]]
+Temperature comparison: {
+  "0.3": [
+    "our school has a question about the new educator and lesson .",
+    "the new lecturer was mentioned in the lesson report yesterday .",
+    "the report about the car explains the journey in detail .",
+    "the local consumer was mentioned in the purchase report yesterday ."
+  ],
+  "0.8": [
+    "our school has a question about the new educator and lesson .",
+    "a review of risk helped us understand the different investment .",
+    "the report about the nurse explains the health in detail .",
+    "the consumer compared the merchandise after checking the price ."
+  ],
+  "1.2": [
+    "our school has a question about the new educator and lesson .",
+    "a review of risk helped us understand the different investment .",
+    "the report about the nurse explains the health in detail .",
+    "the consumer compared the merchandise after checking the price ."
+  ]
+}
+<IPython.core.display.SVG object>
+/Users/luizateixeira/Desktop/MBA/custom-llm/llm_runs/20260916T011637_245910Z.zip
+Saved: llm_runs/20260916T011637_245910Z 
+Results ZIP: /Users/luizateixeira/Desktop/MBA/custom-llm/llm_runs/20260916T011637_245910Z.zip
+=== finished bigarch20k -> llm_runs/20260916T011637_245910Z at Tue Sep 15 18:19:55 PDT 2026 ===
+ALL DONE
